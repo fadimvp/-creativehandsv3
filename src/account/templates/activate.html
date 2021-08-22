@@ -1,0 +1,16 @@
+{% extends 'product/base.html' %}
+
+
+ {% load i18n %}
+{% autoescape off %}
+{% block body %}
+Hi {{ user.first_name}},
+please click on  below link to confirm register
+
+
+ http:{{domain}}{% url 'account:activate' uidb64=uid token=token %}
+
+
+thanks
+{% endblock  %}
+{% endautoescape %}

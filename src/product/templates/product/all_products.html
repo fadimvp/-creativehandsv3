@@ -1,0 +1,102 @@
+{% extends 'product/base.html' %}
+{% load static %}
+
+
+{% block body%}
+
+<link rel="stylesheet" href="{% static 'css/woocommerce.min.css' %} ">
+{{quantity}}
+
+<!-- New Products section start  -->
+<section class="new-product-section">
+    <div class="container">
+        <div class="row">
+            <div class="heading-title">
+                <h2>New Products</h2>
+                <span class="mr-md-auto">
+                    Found <b>  {{ product_count}} </b> items
+                    </span>
+            </div>
+            <div class="new-product">
+
+                <ul class="product-group">
+                    {% for product in product_list %}
+
+                        <li>
+                            <div class="product-card">
+
+                                <div class="card-img">
+                                    <a href="#"><img class="img-fluid" src="{{product.PRDIMG.url }} "
+                                            alt="product-title"></a>
+                                </div>
+
+                                <div class="card-content text-center">
+                                    <a href=" {{product.get_absolute_url}}">
+                                        <h2 class="product-title">{{ product}}</h2>
+                                    </a>
+                                    <div class="rating">
+                                        <span><i class="fas fa-star"></i></span>
+                                        <span><i class="fas fa-star"></i></span>
+                                        <span><i class="fas fa-star"></i></span>
+                                        <span><i class="fas fa-star"></i></span>
+                                        <span><i class="fas fa-star-half-alt"></i></span>
+                                    </div>
+
+                                    <div class="price-group">
+                                      {%if product.PRDDisc > 0 %}
+                                            <del><span class="del-price-list">{{ product.PRDPrice}}  SR</span></del>
+                                            <ins><span class="price-amount amount">{{ product.PRDDisc}} SR</span>
+                                      {% else %}
+                                            <ins><span class="price-amount amount">{{ product.PRDDisc}} SR</span>
+
+                                            </ins>
+                                      {% endif %}
+                                    </div>
+                                    <div class="cart-btn"><a class="add-to-cart-btn" href="#">Add to cart</a></div>
+                                </div>
+                            </div>
+                       </li>
+                    {% endfor %}
+
+
+                </ul>
+
+
+                </nav>
+
+
+            </div>
+
+        </div>
+          <nav aria-label="Page navigation example">
+{% if product_list.has_other_pages %}
+      <ul class="pagination mt-5 ">
+          {% if product_list.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page={{ product_list.previous_page_number}} ">Previous</a></li>
+          {% else %}
+              <li class="disables"></li>
+           <li class="page-item"><a class="page-link disables" href="# ">Previous</a></li>
+
+          {% endif %}
+          {% for pages in product_list.paginator.page_range %}
+             {% if product_list.number == pages %}
+               <li class="page-item"><a class="page-link" href="#">{{pages}}</a></li>
+             {% else %}
+                <li class="page-item"><a class="page-link" href="?page={{pages}}">{{pages}}</a></li>
+             {% endif %}
+
+          {% endfor %}
+
+                {% if product_list.has_next %}
+                     <li class="page-item"><a class="page-link" href="?page={{ product_list.next_page_number}} ">Next</a></li>
+               {% else %}
+                     <li class="page-item disables"><a class="page-link" href="# ">Next</a></li>
+          {% endif %}
+      </ul>
+   {% endif %}
+</nav>
+    </div>
+</section>
+<!-- New Products section end  -->
+
+{% endblock  %}

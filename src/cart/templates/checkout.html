@@ -1,0 +1,394 @@
+
+<!DOCTYPE html>
+{% extends 'product/base.html' %}
+<html lang="en">
+
+<body class="body-class">
+
+{% block  body%}
+
+<section class="checkout">
+    <div class="checout-space"></div>
+    <div class="container">
+        <h2 class="page-title">Checkout</h2>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="returning-customer">
+                <p class="couponobg"> <span class="icon"><i class="fal fa-calendar"></i></span> <span>Returning customer?</span>
+                    <a class="ch-btn" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        Click here to login
+                    </a>
+                    
+                </p>
+                <div class="collapse" id="collapseExample">
+                    <div class="card card-body">
+                        <p>If you have shopped with us before, please enter your details below. If you are a new customer, please proceed to the Billing section.</p>
+                        <div class="login-group row">
+                            <div class="col-md-12 col-lg-6">
+                                <div class="username">
+                                    <div class="pre-login">
+                                        <label for="for-user">Username or email <span class="requred text-danger">*</span></label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-lg-6">
+                                <div class="password">
+                                    <div class="pre-login">
+                                        <label for="for-user">Password <span class="requred text-danger">*</span></label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="login-action-section mt-2">
+                                    <input type="checkbox">
+                                    <label for="loging-save">Remember me</label>
+                                    <div class="action-section">
+                                        <button class="login-btn">Login</button>
+                                    <a href="#" class="lost-pass">Lost your password?</a>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="coupon-code">
+                <p class="couponobg"> <span class="icon"><i class="fal fa-calendar"></i></span> <span>Have a coupon? </span>
+                    <a class="ch-btn" data-toggle="collapse" href="#collapseCoupon" role="button" aria-expanded="false" aria-controls="collapseCoupon">
+                        Click here to login
+                    </a>
+                    
+                </p>
+                <div class="collapse" id="collapseCoupon">
+                    <div class="card card-body">
+                        <p>If you have a coupon code, please apply it below.</p>
+                        <div class="login-group row">
+                            <div class="col-md-10 col-lg-5">
+                                <div class="coupone-section">
+                                <div class="coupone-group">
+                                    <input type="text" class="coupon-input"> <button class="coupon-btn" type="submit" value="Apply coupon" name="apply_coupon">Apply coupon</button>
+                                </div>
+                            </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container customer-order">
+            <div class="customer-details">
+                        <form action="{% url 'order:place_order' %}" method="POST">
+                            {% csrf_token %}
+
+                <h3 class="billing-title">Billing details</h3>
+                <div class="billing-form w-100">
+                    <div class="user-group">
+                        <div class="first-name">
+                            <label for="first-name">First name <span class="text-danger">*</span></label>
+                            <input name="first_name" type="text" class="form-control">
+                        </div>
+                        <div class="last-name">
+                            <label for="last-name">Last name <span class="text-danger">*</span></label>
+                            <input name="last_name" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="country mt-3">
+<!--                        <select name="country" class="countries form-control" id="countryId">-->
+<!--                            <option value="Saudi Arabia" title="Saudi Arabia">Select Country</option>-->
+<!--                        </select>-->
+                        <div class="last-name">
+                            <label for="country">country <span class="text-danger">*</span></label>
+                            <input name="country" class="countries form-control" id="countryId"type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="street-address mt-3">
+                        <label for="street-address">Street address <span class="text-danger">*</span></label>
+                        <input name="address_1"type="text" class="form-control" placeholder="House number and street name">
+                        <input name="address_2" type="text" class="form-control mt-3" placeholder="Apartment, suite, unit, etc. (optional)">
+                    </div>
+                    <div class="town-city mt-3">
+                        <label for="town-city">Town d.d./ City <span class="text-danger">*</span></label>
+                        <input name="city" type="text" class="form-control">
+
+                    </div>
+                    <div class="postcode mt-3">
+                        <label for="postcode-zip">Postcode / ZIP <span class="text-danger">*</span></label>
+                        <input name="state" type="state" class="form-control">
+
+                    </div>
+                    <div class="phone mt-3">
+                        <label for="phone">Phone <span class="text-danger">*</span></label>
+                        <input name="phone" type="tel" class="form-control">
+
+                    </div>
+                    <div class="email mt-3">
+                        <label for="email">email <span class="text-danger">*</span></label>
+                        <input name="email" type="email" class="form-control">
+
+                    </div>
+
+                </div>
+                <button class="dif-ship-btn mt-3">
+                    <input type="checkbox"  id="dif-address-btn">
+                    <label for="checkbox">Ship to a different address?</label>
+                </button>
+                <div class="different-address w-100">
+                    <div class="billing-form w-100">
+                        <div class="user-group">
+                            <div class="first-name">
+                                <label for="first-name">First name <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control">
+                            </div>
+                            <div class="last-name">
+                                <label for="last-name">Last name <span class="text-danger">*</span></label>
+                                <input name="" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="country mt-3">
+                            <select name="country" class="countries form-control" id="countryId">
+                                <option value="Saudi Arabia" title="Saudi Arabia">Select Country</option>
+                            </select>
+                        </div>
+                        <div class="street-address mt-3">
+                            <label for="street-address">Street address <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" placeholder="House number and street name">
+                            <input type="text" class="form-control mt-3" placeholder="Apartment, suite, unit, etc. (optional)">
+                        </div>
+                        <div class="town-city mt-3">
+                            <label for="town-city">Town / City <span class="text-danger">*</span></label>
+                            <input  type="text" class="form-control">
+
+                        </div>
+                        <div class="postcode mt-3">
+                            <label for="postcode-zip">Postcode / ZIP <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control">
+
+                        </div>
+                        <div class="phone mt-3">
+                            <label for="phone">Phone <span class="text-danger">*</span></label>
+                            <input type="tel" class="form-control">
+
+                        </div>
+                        <div class="email mt-3">
+                            <label for="email">Phone <span class="text-danger">*</span></label>
+                            <input type="email" class="form-control">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="note w-100">
+                    <label for="note">Order notes (optional)</label>
+                    <textarea name="order_note" id="note" class="form-control"></textarea>
+                </div>
+            </div>
+
+        <div class="order-review">
+            <p class="your-order-title">Your order</p>
+            <div class="checkout-order-table">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                {% for cart_item in cart_items %}
+                                <td class="product-name">
+                                    <strong class="product-quantity">{{cart_item.quantity}}x </strong>{{cart_item}}
+                                    {% for items in cart_item.variations.all %}
+                                    <dl class="variation">
+                                        <dt class="variration-soldby">{{ items.variation_category}}: {{items.variation_vale}}</dt>
+                               </dl>
+                                    {% endfor %}
+
+
+                                </td>
+                                <td class="product-total">
+                                    <span class="price-amount">
+                                        <bdi>
+                                        {{cart_item.quantity}} *  {{ cart_item.product.PRDPrice }}
+                                            <span class="price-symble">SR</span>
+                                        </bdi>
+                                    </span>
+                                </td>
+                            </tr>
+                                                    {% endfor %}
+
+                            <tr class="checout-total">
+                                <strong>
+                                    <td>
+                                    <strong>tax</strong>
+                                    </td>
+                                     <td>
+                                    <bdi>
+                                         {{ tax |floatformat:1 }}
+                                        <span class="currency-symbol">
+                                            SR
+                                        </span>
+                                    </bdi>
+
+
+                                </td>
+
+                                </strong>
+                            </tr>
+                            <tr class="checout-total">
+                                <strong>
+                                    <td>
+                                    <strong>Subtotal</strong>
+                                    </td>
+                                     <td>
+                                    <bdi>
+                                         {{ a |floatformat:0 }}eee
+                                        <span class="currency-symbol">
+                                            SR
+                                        </span>
+                                    </bdi>
+
+
+                                </td>
+
+                                </strong>
+                            </tr>
+                            <tr class="checout-total">
+                                <strong>
+                                    <td>
+                                    <strong>Total</strong>
+                                    </td>
+                                    <td>
+                                        <span class="price-amount">
+                                            <bdi>
+                                                  {{ total_tex |floatformat:1 }}
+                                                <span class="price-symble">
+                                                    SR
+                                                </span>
+                                            </bdi>
+                                        </span>
+                                    </td>
+                                </strong>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="checkout-payment">
+                    <ul class="payment-methods">
+                        <li class="payment-method-item-list">
+                            <span class="payment-btn dbt">
+                                <input type="radio" class="input-radio">
+                                <label for="dbt">Direct bank transfer</label>
+                            </span>
+                            <div class="payment-method-item dbt-div active">
+                                <p>
+                                    Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.
+                                </p>
+                            </div>
+                        </li>
+
+                        <li class="payment-method-item-list">
+                            <span class="payment-btn cod">
+                                <input type="radio" class="input-radio">
+                                <label for="cod">Cash on delivery </label>
+                            </span>
+                            <div class="payment-method-item cod-div">
+                                <p>
+                                    Pay with cash upon delivery.
+                                </p>
+                            </div>
+                        </li>
+                         <div class="mysr-form">
+                         <li class="payment-method-item-list">
+                            <span class="payment-btn stc">
+                                <input type="radio" class="input-radio">
+                                <label for="stc">stc<img src="assets/images/logo3.png" alt=""> </label>
+                            </span>
+                            <div class="payment-method-item stc-div">
+
+
+
+                                <div class="bank-info">
+                                    <p>Please fill in the fields to process your payment:</p>
+                                    <label for="stc-phone-number">STC Phone Number ex.(966512345678) <span class="requred text-danger">*</span></label>
+                                    <input type="text" class="form-control">
+                                    <label for="stc-otp">OTP Number <span class="requred text-danger">*</span></label>
+                                    <input type="text" class="form-control">
+                                </div>
+
+                                <p>
+                                    Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our .
+                                </p>
+                            </div>
+
+                        </li>
+                         </div>
+                    </ul>
+                    <div class="confirmation">
+                        <p>
+                            <input name="i_agree" type="checkbox" required>
+                            <label for="confirm">I have read and agree to the website <a href="#">terms and conditions</a> <span class="requred text-danger">*</span>
+                            </label>
+                        </p>
+
+                        <button class="form-control place-btn" type="submit">{% for d in cart_items%}{{d.product.PRDPrice}}{%endfor %}Place order</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+                </form>
+
+    </div>
+</section>
+<!-- Checkout content end  -->
+
+{% endblock  %}
+<script>
+    Moyasar.init({
+        // Required
+        // Specify where to render the form
+        // Can be a valid CSS selector and a reference to a DOM element
+        element: '.mysr-form',
+
+        // Required
+        // Amount in the smallest currency unit
+        // For example:
+        // 10 SAR = 10 * 100 Halalas
+        // 10 KWD = 10 * 1000 Fils
+        // 10 JPY = 10 JPY (Japanese Yen does not have fractions)
+        amount: 1000,
+
+        // Required
+        // Currency of the payment transation
+        currency: 'SAR',
+
+        // Required
+        // A small description of the current payment process
+        description: 'Coffee Order #1',
+
+        // Required
+        publishable_api_key: 'pk_test_AQpxBV31a29qhkhUYFYUFjhwllaDVrxSq5ydVNui',
+
+        // Required
+        // This URL is used to redirect the user when payment process has completed
+        // Payment can be either a success or a failure, which you need to verify on you system (We will show this in a couple of lines)
+        callback_url: 'https://moyasar.com/thanks',
+
+        // Optional
+        // Required payments methods
+        // Default: ['creditcard', 'applepay', 'stcpay']
+        methods: [
+            'creditcard',
+        ],
+    });
+</script>
+</body>
+
+</html>

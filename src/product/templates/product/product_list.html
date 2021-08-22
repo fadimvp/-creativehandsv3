@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+{% extends 'product/base.html' %}
+{% load static %}
+
+{% block body %}
+
+<body class="body-class">
+
+<section class="body-wrapper"> <!-- Body Background section start -->
+    <!-- Home Category section start  -->
+    <section class="cateory-slider-section">
+        <div class="container">
+            <div class="row">
+                <div class="owl-carousel owl-category owl-theme">
+
+                    {% for dd in d %}
+
+                    <div class="item">
+                        <div class="col-xs-12 cat-card">
+                            <div class="card">
+                                <a href="{{ dd.get_url }}"><img class="card-img-top" src="{{ dd.CATImg.url}} "
+                                                                alt="Wood Craft"></a>
+                                <div class="card-body">
+
+                                    <a href="{{ dd.get_url }}">
+                                        <h5 class="card-title cat-card-title">{{dd.CATName}}</h5>
+                                    </a>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    {% endfor %}
+
+
+                </div>
+            </div>
+    </section>
+    <!-- Produc category casouel section end  -->
+    <!-- New Products section start  -->
+    <section class="new-product-section">
+        <div class="container">
+            <div class="row">
+                <div class="heading-title">
+                    <h2>New Products</h2>
+                    <span class="mr-md-auto">
+                    Found <b>  {{ product_count}} </b> items
+                    </span>
+                </div>
+                <div class="new-product">
+
+                    <ul class="product-group">
+                      {% for product in product_list%}
+
+
+
+
+                         <li>
+
+                            <div class="product-card">
+
+                                <div class="card-img">
+                                    <a href="{{product.get_absolute_url}}"><img class="img-fluid" src="{{product.PRDIMG.url }} "
+                                                     alt="product-title"></a>
+                                </div>
+
+
+
+
+
+
+                                <div class="card-content text-center">
+                                    <a href=" {{product.get_absolute_url}}">
+                                        <h2 class="product-title">{{ product}}</h2>
+                                    </a>
+                                    <div class="rating">
+                                        <span><i class="fas fa-star"></i></span>
+                                        <span><i class="fas fa-star"></i></span>
+                                        <span><i class="fas fa-star"></i></span>
+                                        <span><i class="fas fa-star"></i></span>
+                                        <span><i class="fas fa-star-half-alt"></i></span>
+                                    </div>
+                                    <div class="price-group">
+                                        {%if product.PRDDisc > 0 %}
+                                        <del><span class="del-price-list">{{ product.PRDPrice}}  SR</span></del>
+                                        <ins><span class="price-amount amount">{{ product.PRDDisc}} SR</span>
+
+                                            {% else %}
+                                            <ins><span class="price-amount amount">{{ product.PRDDisc}} SR</span>
+
+                                            </ins>
+                                            {% endif %}
+                                            {% if product.stock <= 0 %}
+
+                                            {% else %}
+
+                                            <div class="cart-btn"><a class="add-to-cart-btn"
+                                                                     href="{% url 'cart:add_cart' product.id %}">Add to
+                                                cart</a></div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                         </li>
+                        {% endfor %}
+
+                    </ul>
+
+                    <a class="show-more-btn" href="{% url 'products:all_pro' %}">Show More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- New Products section end  -->
+    <!-- Featured product section start  -->
+    <section class="featured-product-section">
+        <div class="container">
+            <div class="row">
+                <div class="heading-title">
+                    <h2>Featured Products</h2>
+                </div>
+
+                <div class="new-product">
+                    <ul class="product-group">
+                        {% for pro_list in product_featured %}
+
+                        <li>
+
+                            <div class="product-card">
+
+                                <div class="card-img">
+                                    <a href="#"><img class="img-fluid" src="{{ pro_list.PRDIMG.url }} "
+                                                     alt="product-title"></a>
+                                </div>
+                                <div class="card-content text-center">
+                                    <a href="#">
+                                        <h2 class="product-title">{{pro_list.PRDName}}</h2>
+                                    </a>
+                                    <div class="rating">
+                                        <span><i class="fas fa-star"></i></span>
+                                        <span><i class="fas fa-star"></i></span>
+                                        <span><i class="fas fa-star"></i></span>
+                                        <span><i class="fas fa-star"></i></span>
+                                        <span><i class="fas fa-star-half-alt"></i></span>
+                                    </div>
+                                    <div class="price-group">
+                                        <del><span class="price-amount amount">{{pro_list.PRDPrice }}</span></del>
+                                        <ins><span class="price-amount amount">{{pro_list.PRDDisc}}</span></ins>
+                                    </div>
+                                    {% if pro_list %}
+                                    <div class="cart-btn"><a class="add-to-cart-btn"
+                                                             href="{% url 'cart:add_cart' pro_list.id %}">Add to
+                                        cart</a></div>
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+                        </li>
+
+
+                    </ul>
+                    <a class="show-more-btn" href="#">Show More</a>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- Featured Products section end  -->
+    <!-- Limited offer section start  -->
+    <section class="limited-offer-section">
+        <div class="container">
+            <div class="row">
+                <div class="heading-title">
+                    <h2>Limited Products</h2>
+                </div>
+
+
+                <div class="new-product">
+                    <ul class="product-group">
+                        {% for limited_pro in limited_products %}
+                        {% if limited_pro %}
+
+
+                            <li>
+                                <!-- onsale product start-->
+                                <div class="product-card">
+                                    <div class="card-img">
+                                        <a href="#"><img class="img-fluid" src="{% static 'images/woo.jpeg' %} "
+                                                         alt="product-title"></a>
+                                        <span class="onsale">Sale</span>
+                                    </div>
+
+                                    <div class="card-content text-center">
+                                        <a href="#">
+                                            <h2 class="product-title"> {{limited_pro.PRDName}}</h2>
+                                        </a>
+                                        <div class="rating">
+                                            <span><i class="fas fa-star"></i></span>
+                                            <span><i class="fas fa-star"></i></span>
+                                            <span><i class="fas fa-star"></i></span>
+                                            <span><i class="fas fa-star"></i></span>
+                                            <span><i class="fas fa-star-half-alt"></i></span>
+                                        </div>
+
+                                        <div class="price-group">
+                                            <ins><span class="price-amount amount">{{limited_pro.PRDPrice}}</span></ins>
+                                        </div>
+                                        <div class="cart-btn"><a class="add-to-cart-btn" href="#">Add to cart</a></div>
+                                    </div>
+                                </div>
+                                <!-- onsale product end-->
+                            </li>
+                        {% endif %}
+                        {% endfor %}
+                    </ul>
+                    <a class="show-more-btn" href="#">Show More</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- Limiter offer section end  -->
+
+</section> <!-- Body Background section end -->
+
+
+</body>
+{% endblock %}
+<!-- body bottom javascript start  -->
+<script type="text/javascript" src=" {% static 'js/jquery-3.5.1.min.js' %}"></script>
+<script type="text/javascript" src=" {% static 'js/bootstrap.bundle.min.js' %}"></script>
+<script type="text/javascript" src=" {% static 'js/slick.js' %}"></script>
+<script type="text/javascript" src=" {% static 'js/fontawesome.js' %}"></script>
+<script type="text/javascript" src=" {% static 'js/aos2.3.4.js' %}"></script>
+<script type="text/javascript" src=" {% static 'js/owl.carousel.min.js' %}"></script>
+<script type="text/javascript" src=" {% static 'js/wow.min.js' %}"></script>
+<script type="text/javascript" src=" {% static 'js/main.js' %}"></script>
+
+
+<!-- body bottom javascript end  -->
+
+</html>

@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | CreativeHands</title>
+    <!-- Favicon  -->
+    <link rel="icon" href="assets/images/favicon.png" type="image/png" sizes="16x16">
+    <!--    All css links start-->
+    <!--   Animate css-->
+    <link rel="stylesheet" href="assets/css/animate.min.css">
+    <!--    AOS scrolling css -->
+    <link rel="stylesheet" href="assets/css/aos2.3.4.css">
+    <!--    Icons css -->
+    <link rel="stylesheet" href="assets/css/linearicons.css">
+    <link rel="stylesheet" href="assets/css/elementor-icons.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="assets/css/fontawesome.css">
+    <!--    carousel css -->
+    <link rel="stylesheet" href="assets/css/owl.theme.default.min.css">
+
+    <link rel="stylesheet" href="assets/css/owl.carousel.css">
+    <link rel="stylesheet" href="assets/css/slick.min.css">
+    <!--    Bootstrap css -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="assets/css/bootstrap.rtl.min.css"> -->
+
+
+    <!--    primary css -->
+    <link rel="stylesheet" href="style.css">
+    <!--    All css links end-->
+</head>
+
+<body class="body-class">
+<nav class="navbar navbar-expand-lg navbar-dark bg-brand">
+    <!-- Logo column -->
+    <div class="navbar-nav col-lg-2 col-sm-12 order-lg-1 text-center">
+        <a href="#" class="navbar-brand mx-auto"><img class="logo animate__animated  animate__fadeIn animate__slower"
+                                                      src="/assets/images/logo.png" width="80px" alt="" /></a>
+    </div>
+    <!-- Menu Column -->
+    <div class="navbar-nav col-lg-5 col-sm-12 order-lg-2" style="margin: 20px 0">
+        <div class="container-fluid p-0 justify-content-center">
+            <!-- Account -->
+            <div class="navbar-nav col-4 col-lg-1 order-lg-3 justify-content-center text-center p-0">
+                <a href="#" class="nav-item">
+                    <i class="fas fa-user" style="font-size: 20px" data-toggle="modal" data-target="#cartModal"
+                       value="5">
+                    </i>
+                </a>
+            </div>
+            <!-- cart -->
+            <div class="navbar-nav col-4 col-lg-3 order-lg-2 justify-content-center text-center p-0 cart-info" id="cart-info">
+                <a href="#" class="nav-item " data-toggle="modal" data-target="#cartModal">
+                    <span class="price">ر.س 0000.00</span>
+                    <i class="fas fa-shopping-basket" style="font-size: 20px" data-toggle="modal"
+                       data-target="#cartModal" value="5">
+                    </i>
+                </a>
+            </div>
+            <!-- menu -->
+            <div class="navbar-nav col-4 col-lg-8 order-lg-1 text-center p-0">
+                <!-- Toggle Button -->
+                <button class="toggle-collapse" type="button" id="toggle-button" onclick="showMenuFunction()">
+                    <i class="fa fa-bars fa-lg" id="toggle-icon"></i>
+                </button>
+                <div class="toggle-menu animate__animated  navbar-collapse justify-content-end" id="toggle-menu">
+                    <!-- Menu Items -->
+                    <ul class="navbar-nav">
+                        <li class="nav-item active">
+                            <a class="nav-link text-light mr-4" href="#">Home <span class="sr-only">(current)</span></a>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle mr-4" href="#" id="navbarDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Art
+                            </a>
+                            <div class="dropdown-menu dropdown animate__animated  animate__fadeIn animate__fast"
+                                 aria-labelledby="navbarDropdown">
+                                <!-- This is from database Categories -->
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                            </div>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle mr-4" href="#" id="navbarDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Visual
+                            </a>
+
+                            <div class="dropdown-menu animate__animated  animate__fadeIn animate__fast"
+                                 aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Search Column -->
+    <div class="col-lg-5 col-sm-12 order-lg-0">
+        <!-- Search section -->
+        <form class="form-inline">
+            <select class="select_search custom-select" id="inputGroupSelect01">
+                <!-- these options will be selected from Categories database -->
+                <option selected>All</option>
+                <option value="1">Hello</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </select>
+            <!-- Ajax Filtering on typing letters -->
+            <input type="text" class="search_text form-control" placeholder="Search" />
+        </form>
+    </div>
+</nav>
+
+<!-- Mini cart summary section start  -->
+<div class="cart-info-base" id="cart-info-base">
+    <!-- Cart information start  -->
+        <div role="button" id="close-btn" class="close-btn" >
+        <a class="close__toggle" href="#"><i class="fal fa-times"></i></a>
+    </div>
+    <div class="card-info-wrap">
+        <div class="cart-info-itmes border-bt">
+            <!-- Items list start start  -->
+            <div class="cart-info-img">
+                <a href="#"><img class="img-fluid" src="/assets/images/woo.jpeg" alt="product-title"></a>
+            </div>
+            <div class="cart-info-content">
+                <a class="product-title" href="#">مبخر خشبي (غلايا</a>
+                <dl>
+                    <dt class="sold-by">Sold By:</dt>
+                    <dd class="shop-name">
+                        Wahed Nur
+                    </dd>
+                </dl>
+                <span class="qty-price">1 x <span class="price">
+                        <bdi>
+                            8000.00
+                        </bdi> SR
+                    </span></span>
+            </div>
+            <div class="cart-info-item-remove">
+                <a href="#"><i class="fas fa-times"></i></a>
+            </div>
+        </div> <!-- Items list start end  -->
+        <div class="cart-info-itmes border-bt">
+            <!-- Items list start start  -->
+            <div class="cart-info-img">
+                <a href="#"><img class="img-fluid" src="/assets/images/woo.jpeg" alt="product-title"></a>
+            </div>
+            <div class="cart-info-content">
+                <a class="product-title" href="#">مبخر خشبي (غلايا</a>
+                <dl>
+                    <dt class="sold-by">Sold By:</dt>
+                    <dd class="shop-name">
+                        Wahed Nur
+                    </dd>
+                </dl>
+                <span class="qty-price">1 x <span class="price">
+                        <bdi>
+                            8000.00
+                        </bdi> SR
+                    </span></span>
+            </div>
+            <div class="cart-info-item-remove">
+                <a href="#"><i class="fas fa-times"></i></a>
+            </div>
+        </div> <!-- Items list start end  -->
+        <div class="cart-info-itmes border-bt">
+            <!-- Items list start start  -->
+            <div class="cart-info-img">
+                <a href="#"><img class="img-fluid" src="/assets/images/woo.jpeg" alt="product-title"></a>
+            </div>
+            <div class="cart-info-content">
+                <a class="product-title" href="#">مبخر خشبي (غلايا</a>
+                <dl>
+                    <dt class="sold-by">Sold By:</dt>
+                    <dd class="shop-name">
+                        Wahed Nur
+                    </dd>
+                </dl>
+                <span class="qty-price">1 x <span class="price">
+                        <bdi>
+                            8000.00
+                        </bdi> SR
+                    </span></span>
+            </div>
+            <div class="cart-info-item-remove">
+                <a href="#"><i class="fas fa-times"></i></a>
+            </div>
+        </div> <!-- Items list start end  -->
+    </div>
+    <!-- Cart information end  -->
+    <!-- Price information -->
+    <div class="cart-info-price">
+        <strong>Subtotal: </strong>
+        <span class="cart-info-subtotal">
+            <bdi>
+                18000.99 
+                <span class="cart-info-currency-symbol">
+                    SR
+                </span>
+            </bdi>
+        </span>
+    </div>
+    <div class="cart-info-button btn-group">
+        <a class="info-view-cart info-btn" href="#">View cart</a>
+        <a class="info-checkout info-btn" href="#">Checkout</a>
+    </div>
+</div>
+<!-- Mini cart summary section end  -->
+<!-- Checkout content start  -->
+<section class="checkout">
+    <div class="checout-space"></div>
+    <div class="container">
+        <h2 class="page-title">Checkout</h2>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="returning-customer">
+                <p class="couponobg"> <span class="icon"><i class="fal fa-calendar"></i></span> <span>Returning customer?</span>
+                    <a class="ch-btn" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        Click here to login
+                    </a>
+                    
+                </p>
+                <div class="collapse" id="collapseExample">
+                    <div class="card card-body">
+                        <p>If you have shopped with us before, please enter your details below. If you are a new customer, please proceed to the Billing section.</p>
+                        <div class="login-group row">
+                            <div class="col-md-12 col-lg-6">
+                                <div class="username">
+                                    <div class="pre-login">
+                                        <label for="for-user">Username or email <span class="requred text-danger">*</span></label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-lg-6">
+                                <div class="password">
+                                    <div class="pre-login">
+                                        <label for="for-user">Password <span class="requred text-danger">*</span></label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="login-action-section mt-2">
+                                    <input type="checkbox">
+                                    <label for="loging-save">Remember me</label>
+                                    <div class="action-section">
+                                        <button class="login-btn">Login</button>
+                                    <a href="#" class="lost-pass">Lost your password?</a>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="coupon-code">
+                <p class="couponobg"> <span class="icon"><i class="fal fa-calendar"></i></span> <span>Have a coupon? </span>
+                    <a class="ch-btn" data-toggle="collapse" href="#collapseCoupon" role="button" aria-expanded="false" aria-controls="collapseCoupon">
+                        Click here to login
+                    </a>
+                    
+                </p>
+                <div class="collapse" id="collapseCoupon">
+                    <div class="card card-body">
+                        <p>If you have a coupon code, please apply it below.</p>
+                        <div class="login-group row">
+                            <div class="col-md-10 col-lg-5">
+                                <div class="coupone-section">
+                                <div class="coupone-group">
+                                    <input type="text" class="coupon-input"> <button class="coupon-btn" type="submit" value="Apply coupon" name="apply_coupon">Apply coupon</button>
+                                </div>
+                            </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container customer-order">
+        <div class="customer-details">
+            <h3 class="billing-title">Billing details</h3>
+            <div class="billing-form w-100">
+                <div class="user-group">
+                    <div class="first-name">
+                        <label for="first-name">First name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="last-name">
+                        <label for="last-name">Last name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="country mt-3">
+                    <select name="country" class="countries form-control" id="countryId">
+                        <option value="Saudi Arabia" title="Saudi Arabia">Select Country</option>
+                    </select>
+                </div>
+                <div class="street-address mt-3">
+                    <label for="street-address">Street address <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" placeholder="House number and street name">
+                        <input type="text" class="form-control mt-3" placeholder="Apartment, suite, unit, etc. (optional)">
+                </div>
+                <div class="town-city mt-3">
+                    <label for="town-city">Town / City <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control">
+
+                </div>
+                <div class="postcode mt-3">
+                    <label for="postcode-zip">Postcode / ZIP <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control">
+
+                </div>
+                <div class="phone mt-3">
+                    <label for="phone">Phone <span class="text-danger">*</span></label>
+                        <input type="tel" class="form-control">
+
+                </div>
+                <div class="email mt-3">
+                    <label for="email">Phone <span class="text-danger">*</span></label>
+                        <input type="email" class="form-control">
+
+                </div>
+            </div>
+            <button class="dif-ship-btn mt-3">
+                <input type="checkbox" name="diff-add" id="dif-address-btn">
+                <label for="checkbox">Ship to a different address?</label>
+            </button>
+            <div class="different-address w-100">
+                <div class="billing-form w-100">
+                    <div class="user-group">
+                        <div class="first-name">
+                            <label for="first-name">First name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="last-name">
+                            <label for="last-name">Last name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="country mt-3">
+                        <select name="country" class="countries form-control" id="countryId">
+                            <option value="Saudi Arabia" title="Saudi Arabia">Select Country</option>
+                        </select>
+                    </div>
+                    <div class="street-address mt-3">
+                        <label for="street-address">Street address <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" placeholder="House number and street name">
+                            <input type="text" class="form-control mt-3" placeholder="Apartment, suite, unit, etc. (optional)">
+                    </div>
+                    <div class="town-city mt-3">
+                        <label for="town-city">Town / City <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control">
+
+                    </div>
+                    <div class="postcode mt-3">
+                        <label for="postcode-zip">Postcode / ZIP <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control">
+
+                    </div>
+                    <div class="phone mt-3">
+                        <label for="phone">Phone <span class="text-danger">*</span></label>
+                            <input type="tel" class="form-control">
+
+                    </div>
+                    <div class="email mt-3">
+                        <label for="email">Phone <span class="text-danger">*</span></label>
+                            <input type="email" class="form-control">
+
+                    </div>
+                </div>
+            </div>
+            <div class="note w-100">
+                <label for="note">Order notes (optional)</label>
+                <textarea name="note" id="note" class="form-control"></textarea>
+            </div>
+        </div>
+        <div class="order-review">
+            <p class="your-order-title">Your order</p>
+            <div class="checkout-order-table">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="product-name">
+                                    <strong class="product-quantity">1 x </strong> حامل طارة التطريز
+                                    <dl class="variation">
+                                        <dt class="variration-soldby">Sold By:</dt>
+                                        <dt class="variration-soldby">kahraman</dt>
+                                    </dl>
+                                </td>
+                                <td class="product-total">
+                                    <span class="price-amount">
+                                        <bdi>
+                                            260.00
+                                            <span class="price-symble">SR</span>
+                                        </bdi>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="product-name">
+                                    <strong class="product quantity">1 x </strong> حامل طارة التطريز
+                                    <dl class="variation">
+                                        <dt class="variration-soldby">Sold By:</dt>
+                                        <dt class="variration-soldby">kahraman</dt>
+                                    </dl>
+                                </td>
+                                <td class="product-total">
+                                    <span class="price-amount">
+                                        <bdi>
+                                            260.00
+                                            <span class="price-symble">SR</span>
+                                        </bdi>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr class="checout-total">
+                                <strong>
+                                    <td>
+                                    <strong>Subtotal</strong>
+                                    </td>
+                                    <td>
+                                        <span class="price-amount">
+                                            <bdi>
+                                                710
+                                                <span class="price-symble">
+                                                    SR
+                                                </span>
+                                            </bdi>
+                                        </span>
+                                    </td>
+                                </strong>
+                            </tr>
+                            <tr class="checout-total">
+                                <strong>
+                                    <td>
+                                    <strong>Total</strong>
+                                    </td>
+                                    <td>
+                                        <span class="price-amount">
+                                            <bdi>
+                                                710
+                                                <span class="price-symble">
+                                                    SR
+                                                </span>
+                                            </bdi>
+                                        </span>
+                                    </td>
+                                </strong>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="checkout-payment">
+                    <ul class="payment-methods">
+                        <li class="payment-method-item-list">
+                            <span class="payment-btn dbt">
+                                <input type="radio" class="input-radio">
+                                <label for="dbt">Direct bank transfer</label>
+                            </span>
+                            <div class="payment-method-item dbt-div active">
+                                <p>
+                                    Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.
+                                </p>
+                            </div>
+                        </li>
+
+                        <li class="payment-method-item-list">
+                            <span class="payment-btn cod">
+                                <input type="radio" class="input-radio">
+                                <label for="cod">Cash on delivery </label>
+                            </span>
+                            <div class="payment-method-item cod-div">
+                                <p>
+                                    Pay with cash upon delivery.
+                                </p>
+                            </div>
+                        </li>
+                         <li class="payment-method-item-list">
+                            <span class="payment-btn stc">
+                                <input type="radio" class="input-radio">
+                                <label for="stc"><img src="assets/images/logo3.png" alt=""> </label>
+                            </span>
+                            <div class="payment-method-item stc-div">
+                                <div class="bank-info">
+                                    <p>Please fill in the fields to process your payment:</p>
+                                    <label for="stc-phone-number">STC Phone Number ex.(966512345678) <span class="requred text-danger">*</span></label>
+                                    <input type="text" class="form-control">
+                                    <label for="stc-otp">OTP Number <span class="requred text-danger">*</span></label>
+                                    <input type="text" class="form-control">
+                                </div>
+                                <p>
+                                    Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our .
+                                </p>
+                            </div>
+
+                        </li>
+                    </ul>
+                    <div class="confirmation">
+                        <p>
+                            <input type="checkbox">
+                            <label for="confirm">I have read and agree to the website <a href="#">terms and conditions</a> <span class="requred text-danger">*</span>
+                            </label>
+                        </p>
+                        <button class="form-control place-btn" type="submit">Place order</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Checkout content end  -->
+
+
+    <!-- Footer Section start  -->
+    <footer>
+            <section class="footer-section">
+                <div class="container">
+                    <div class="row">
+                        <div class="footer-grid">
+                            <div class="footer-col">
+                                <h4 class="footer-title">
+                                    Get Started
+                                </h4>
+                                <div class="footer-menu">
+                                    <a href="index.html">Home</a>
+                                    <a href="#">Categories</a>
+                                    <a href="#">Sign Up</a>
+                                </div>
+                            </div>                            
+                            <div class="footer-col">
+                                <h4 class="footer-title">
+                                    Shop
+                                </h4>
+                                <div class="footer-menu">
+                                    <a href="#">Art</a>
+                                    <a href="#">Visual</a>
+                                    <a href="#">By Vendor</a>
+                                </div>
+                            </div>                            
+                            <div class="footer-col">
+                                <h4 class="footer-title">
+                                    Legal
+                                </h4>
+                                <div class="footer-menu">
+                                    <a href="#">Privacy</a>
+                                    <a href="#">Terms & conditions</a>
+
+                                </div>
+                            </div>                            
+                            <div class="footer-col">
+                                <h4 class="footer-title">
+                                    Social
+                                </h4>
+                                <div class="footer-menu social">
+                                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                    <a href="#"><i class="fab fa-youtube"></i></a>
+                                    <a href="#"><i class="fab fa-whatsapp "></i></a>
+                                    <a href="#"><i class="fab  fa-instagram "></i></a>
+
+                                </div>
+                            </div>                            
+                            <div class="footer-col">
+                                <h4 class="footer-title">
+                                    More
+                                </h4>
+                                <div class="footer-menu">
+                                    <a href="#">About us</a>
+                                    <a href="#">Contact Us</a>
+                                    <a href="#">Vendor</a>
+                                </div>
+                            </div>                            
+                        </div>
+                    </div>
+                    <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="copyright">
+                            <p class="footer-copyright">Copyright &copy; 2021 CreativeHands | Developed by <a
+                                    href="https://wahednur.com">WS</a> </p>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </section>    
+    </footer>
+    <!-- Footer Section end  -->
+
+    <!-- body bottom javascript start  -->
+    <script type="text/javascript" src="assets/js/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" src="assets/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="assets/js/slick.js"></script>
+    <script type="text/javascript" src="assets/js/fontawesome.js"></script>
+    <script type="text/javascript" src="assets/js/aos2.3.4.js"></script>
+    <script type="text/javascript" src="assets/js/owl.carousel.min.js"></script>
+    <script type="text/javascript" src="assets/js/wow.min.js"></script>
+    <script type="text/javascript" src="assets/js/main.js"></script>
+    <script type="text/javascript" src="assets/js/cart.js"></script>
+    <script src="assets/js/countrystatecity.js"></script>
+
+
+    <!-- body bottom javascript end  -->
+</body>
+
+</html>

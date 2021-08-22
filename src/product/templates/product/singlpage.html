@@ -1,0 +1,238 @@
+{% extends 'product/base.html' %}
+{% load static %}
+{% block body %}
+
+<body class="body-class">
+
+
+<!-- Sigle product page section start -->
+<div class="emty-50"></div>
+<section class="sigle-product">
+        <form action="{% url 'cart:add_cart' pro_detail.id %}" method="POST">
+            {% csrf_token%}
+
+    <div class="container">
+    <div class="row">
+            <div class="col-md-6">
+                <!-- Product image section start -->
+                <div class="product-image-section">
+                    <div class="img-gallery">
+                        <div class="img-list">
+
+                            {% for f in pro_detail.product_img_set.all %}
+                            <img src="
+                                  {{ f.PRDImg.url }}" alt="" class="thumnail active" id="thumnail">
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="image-preview">
+                        <img id="featured" src="{{ pro_detail.PRDIMG.url}} " alt="">wewe
+                    </div>
+
+                    <button class="img-view"></button>
+                </div>
+                <!-- Product image section end -->
+            </div>
+            <div class="col-md-6 mt-sm-5 mt-md-0">
+                <div class="product-short-view text-center">
+                    <div class="product">
+                        <h2 class="product-title">{{pro_detail}} </h2>
+                    </div>
+                    <div class="price">
+                        <p class="price-title">
+                            {%if pro_detail.PRDDisc > 0%}
+                            <bdi>
+                                {{pro_detail.PRDDisc}} <span class="price-symbole">SR</span>
+                            </bdi>
+                            <del><span class="del-price">  {{pro_detail.PRDPrice}} SR</span></del>
+
+                        </p>
+                        {% else %}
+                        <bdi>
+                            {{pro_detail.PRDDisc}} <span class="price-symbole">SR</span>
+                        </bdi>
+                        {% endif %}
+
+                    </div>
+
+
+                       <!--  added cart  -->
+
+                    <div class="quantity mb-5 mt-5">
+                        <label for="quantity" class="d-none"> طارة التطريز</label>
+
+                        <input type="number" id="quantity" title="Qty" step="1" min="1" max="4" name="quantity"
+                               value="1" placeholder="" inputmode="numeric" size="4">
+     <div class="item-option-select">
+                                        <h6> choose color  </h6>
+                                        <select  name="color" >
+                                     <option class="form-control"  value="" disabled selected>Choose Color  </option>
+                                            {% for ff in pro_detail.variation_set.colors %}
+                                            <option  value="{{ff.variation_vale | lower }}"> {{ ff.variation_vale | capfirst}} </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="item-option-select">
+                                        <h6> choose size  </h6>
+                                        <select  name="size">
+                                        <option class="form-control"  value="" disabled selected>Choose Size  </option>
+
+                                       {% for ff in pro_detail.variation_set.sizes %}
+                                            <option  class="form-control" value="{{ff.variation_vale}}"> {{ ff.variation_vale}} </option>
+                                       {% endfor %}
+                                        </select>
+                                    </div>
+
+                        <button type="submit"class="btn btn-success ml-3 mt-5"><i class="fas fa-check"></i> <span class="buy-btn">Added cart</span></button>
+
+                        <a  href="{% url 'cart:cart_item' %}" class="btn btn-outline-primary ml-3 mt-5"><i class="fas fa-eye"></i> <span class="buy-btn">View Cart </span></a>
+
+
+
+
+                    {% if  pro_detail.stock <= 0 %}
+                    <div class="short-info">
+                        <p>حامل طارة التطريز</p>
+                    </div>
+                    <h5> Out Of Stock </h5>
+                    {% else %}
+
+
+                                    {% endif %}
+
+                            </div>
+                        </div>
+                        <div class="vindor-info"><h4>kahraman</h4></div>
+                        <p>اعمال يدوية متنوعة ( اعمال بالخشب, كروشية , خياطة ) </p>
+                        <p><a href="#">More Products from kahraman </a></p>
+
+
+                    </div>
+                </div>
+            </div>
+            <!-- Product description section start -->
+            <div class="row">
+                <div class="product-description container">
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-description"
+                               role="tab" aria-controls="nav-description" aria-selected="true">Description</a>
+                            <a class="nav-link" id="nav-vendor-tab" data-toggle="tab" href="#nav-vendor" role="tab"
+                               aria-controls="nav-vendor" aria-selected="false">البائع</a>
+                            <a class="nav-link" id="nav-review-tab" data-toggle="tab" href="#nav-review" role="tab"
+                               aria-controls="nav-review" aria-selected="false">Reviews (0)</a>
+                            <a class="nav-link" id="nav-qaa-tab" data-toggle="tab" href="#nav-qaa" role="tab"
+                               aria-controls="nav-qaa" aria-selected="false">Questions and Answers</a>
+                            <a class="nav-link" id="nav-more-tab" data-toggle="tab" href="#nav-more" role="tab"
+                               aria-controls="nav-more" aria-selected="false">More Offers</a>
+                        </div>
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-description" role="tabpanel"
+                             aria-labelledby="nav-description-tab">
+                            <p>حامل طارة التطريز _ بني متوسط</p>
+                            <p>أمكانية التحكم بالأرتفاع المناسب</p>
+                            <p>التفاف بدرجة 360</p>
+                            <p>مقابض اغلاق</p>
+                            <p>مصنوع من الخشب السويدي</p>
+                            <p>المقاسات :</p>
+                            <p>الأرتفاع : 15 سم</p>
+                            <p>القاعدة : الطول 34 سم , العرض: 20 سم</p>
+                            <p>طول الذراع 35 سم</p>
+                            <p>حامل الطارة بعرض 15 سم </p>
+                        </div>
+                        <div class="tab-pane fade" id="nav-vendor" role="tabpanel" aria-labelledby="nav-vendor-tab">
+                            <div class="row">
+                                <h2 class="product-vendor">
+                                    kahraman
+                                </h2>
+                                <div class="rev-left text-left">
+                                    <div class="review-star">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <a class="vendor-rev-link" href="#">5 Stars out of based on 1 Review</a>
+                                </div>
+                                <div class="rev-center text-center">
+                                    <p>اعمال يدوية متنوعة ( اعمال بالخشب, كروشية , خياطة )</p>
+                                    <p><a href="#">More Products from kahraman</a></p>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="nav-review" role="tabpanel" aria-labelledby="nav-review-tab">
+                            <div class="rev-title">
+                                Reviews
+                            </div>
+                            <p>There are no reviews yet.</p>
+                            <p>Only logged in customers who have purchased this product may leave a review.</p>
+                        </div>
+                        <div class="tab-pane fade" id="nav-qaa" role="tabpanel" aria-labelledby="nav-qaa-tab">
+                            <h2 class="qan-title">
+                                Questions and Answers
+                            </h2>
+                            <input type="text" class="qna form-control" placeholder="Have a question? Search for answer">
+                        </div>
+                        <div class="tab-pane fade" id="nav-more" role="tabpanel" aria-labelledby="nav-more-tab">
+                            <p>Sorry no more offers available</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Product description section end -->
+        </div>
+        </form>
+</section>
+<!-- Sigle product page section end -->
+
+
+<!-- body bottom javascript start  -->
+<script type="text/javascript" src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/fontawesome.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/aos2.3.4.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/owl.carousel.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/wow.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
+<script src="{% static 'js/elevateZoom-3.0.8.min.js' %}"></script>
+<script type="text/javascript">
+        // product page
+            let thumbnails = document.getElementsByClassName('thumnail')
+
+                    let activeImages = document.getElementsByClassName('active')
+
+                    for (var i=0; i < thumbnails.length; i++){
+
+                        thumbnails[i].addEventListener('click', function(){
+                            console.log(activeImages)
+                            
+                            if (activeImages.length > 0){
+                                activeImages[0].classList.remove('active')
+                            }
+                            
+
+                            this.classList.add('active')
+                            document.getElementById('featured').src = this.src
+                            document.getElementById('featured').scrollLeft -= 360
+                        });
+                    };
+
+                    $('#featured').elevateZoom({
+                        zoomType: 'inner',
+                        cursor: 'cursor',
+                        zoomWindowFadeIn: 600,
+                        zoomWindowFadeOut: 850
+                    });
+
+
+</script>
+<!-- body bottom javascript end  -->
+</body>
+{% endblock   %}
+</html>

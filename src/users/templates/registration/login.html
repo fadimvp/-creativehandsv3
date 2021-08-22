@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block body %}
+   <!-- Login register page content start  -->
+    <section class="login-regi-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-12">
+                    <!-- Loging section area start -->
+                    <h2>Login</h2>
+                    <form class="logi-regi-form" action=" {% url 'auth:login' %}" method="POST">
+
+                        <div class="form-group">
+                            {% csrf_token %}
+                            <label for="username">Username or email address <span class="requre text-danger">*</span></label>
+                               {{form.username}}
+
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Password <span class="requre text-danger">*</span></label>
+                                                           {{form.password}}
+
+                        </div>
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input mt-2" id="exampleCheck1">
+                            <label class="form-check-label" for="remeber">Remember me</label>
+                        </div>
+                        <button type="submit" class="btn log-regi-btn">Log in</button>
+                    </form>
+                    <a class="login-link" href="#">Lost your password? </a>
+                    <!-- Loging section area end -->
+                </div>
+                <div class="col-lg-6 co-12">
+                    <!-- Register section area start -->
+                    <h2>Register</h2>
+                    <form class="logi-regi-form">
+                        <div class="form-group">
+                            <label for="username">Email address <span class="requre text-danger">*</span></label>
+                               {{form.username}}
+
+                        </div>
+
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input mt-2" id="exampleCheck1">
+                            <label class="form-check-label" for="remeber">I've read and accept the <a href="#">Terms and Condition</a><span class="requre text-danger">*</span></label>
+                        </div>
+                        <button type="submit" class="btn log-regi-btn my-4">Register</button>
+                    </form>
+                    <a class="login-link" href="#">Beacume a vendor </a>
+                    <!-- Register section area end -->
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- Login register page content end  -->
+{% endblock %}

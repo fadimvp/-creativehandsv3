@@ -1,0 +1,189 @@
+{% extends 'product/base.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+{% block body %}
+<body class="body-class">
+
+<!-- Mini cart summary section start  -->
+<div class="cart-info-base" id="cart-info-base">
+    <!-- Cart information start  -->
+        <div role="button" id="close-btn" class="close-btn" >
+        <a class="close__toggle" href="#"><i class="fal fa-times"></i></a>
+    </div>
+    <div class="card-info-wrap">
+        <div class="cart-info-itmes border-bt">
+            <!-- Items list start start  -->
+            <div class="cart-info-img">
+                <a href="#"><img class="img-fluid" src="/assets/images/woo.jpeg" alt="product-title"></a>
+            </div>
+            <div class="cart-info-content">
+                <a class="product-title" href="#">مبخر خشبي (غلايا</a>
+                <dl>
+                    <dt class="sold-by">Sold By:</dt>
+                    <dd class="shop-name">
+                        Wahed Nur
+                    </dd>
+                </dl>
+                <span class="qty-price">1 x <span class="price">
+                        <bdi>
+                            8000.00
+                        </bdi> SR
+                    </span></span>
+            </div>
+            <div class="cart-info-item-remove">
+                <a href="#"><i class="fas fa-times"></i></a>
+            </div>
+        </div> <!-- Items list start end  -->
+        <div class="cart-info-itmes border-bt">
+            <!-- Items list start start  -->
+            <div class="cart-info-img">
+                <a href="#"><img class="img-fluid" src="/assets/images/woo.jpeg" alt="product-title"></a>
+            </div>
+            <div class="cart-info-content">
+                <a class="product-title" href="#">مبخر خشبي (غلايا</a>
+                <dl>
+                    <dt class="sold-by">Sold By:</dt>
+                    <dd class="shop-name">
+                        Wahed Nur
+                    </dd>
+                </dl>
+                <span class="qty-price">1 x <span class="price">
+                        <bdi>
+                            8000.00
+                        </bdi> SR
+                    </span></span>
+            </div>
+            <div class="cart-info-item-remove">
+                <a href="#"><i class="fas fa-times"></i></a>
+            </div>
+        </div> <!-- Items list start end  -->
+        <div class="cart-info-itmes border-bt">
+            <!-- Items list start start  -->
+            <div class="cart-info-img">
+                <a href="#"><img class="img-fluid" src="/assets/images/woo.jpeg" alt="product-title"></a>
+            </div>
+            <div class="cart-info-content">
+                <a class="product-title" href="#">مبخر خشبي (غلايا</a>
+                <dl>
+                    <dt class="sold-by">Sold By:</dt>
+                    <dd class="shop-name">
+                        Wahed Nur
+                    </dd>
+                </dl>
+                <span class="qty-price">1 x <span class="price">
+                        <bdi>
+                            8000.00
+                        </bdi> SR
+                    </span></span>
+            </div>
+            <div class="cart-info-item-remove">
+                <a href="#"><i class="fas fa-times"></i></a>
+            </div>
+        </div> <!-- Items list start end  -->
+    </div>
+    <!-- Cart information end  -->
+    <!-- Price information -->
+    <div class="cart-info-price">
+        <strong>Subtotal: </strong>
+        <span class="cart-info-subtotal">
+            <bdi>
+                18000.99
+                <span class="cart-info-currency-symbol">
+                    SR
+                </span>
+            </bdi>
+        </span>
+    </div>
+    <div class="cart-info-button btn-group">
+        <a class="info-view-cart info-btn" href="#">View cart</a>
+        <a class="info-checkout info-btn" href="#">Checkout</a>
+    </div>
+</div>
+<!-- Mini cart summary section end  -->
+    <!-- Login register page content start  -->
+    <section class="login-regi-section">
+        {% if request.GET.command == 'verification' %}
+        <div class="container mx-auto alert alert-info text-center " role="alert"style="max-width:1024px">
+
+            thank you for  register verification your email [{{request.GET.email}}]
+        already  verified ? <a href="{% url 'account:login' %}">login </a>
+        </div>
+        {% else  %}
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-12">
+                     <!-- Loging section area start -->
+                    {% if user.id is None %}
+                    <h2>Login</h2>
+
+                    <form action="{% url 'account:login'%}" method="POST" class="logi-regi-form">
+
+
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="username">Username or email address <span class="requre text-danger">*</span></label>
+                            <input type="email"  name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Password <span class="requre text-danger">*</span></label>
+                            <input name='password' type="password" class="form-control" id="exampleInputPassword1">
+
+                        </div>
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input mt-2" id="exampleCheck1">
+                            <label class="form-check-label" for="remeber">Remember me</label>
+                        </div>
+                        <button type="submit" class="btn log-regi-btn">Log in</button>
+                          {{ form1.email.errors}}
+                        {{ form1.non_field_errors}}
+                    </form>
+
+                    <a class="login-link" href="{% url 'account:forgotpass' %}">Lost your password? </a>
+                    {% else %}
+
+                    <h2 ><a href="{% url 'account:logout' %}"> Logout</a> </h2>
+                       {% endif %}
+                    <!-- Loging section area end -->
+                </div>
+                <div class="col-lg-6 co-12">
+                    <!-- Register section area start -->
+                    <h2>Register</h2>
+                    {% if user.id is None %}
+
+                    <form method="POST" class="logi-regi-form">
+
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="username">Email address <span class="requre text-danger">*</span></label>
+                            {{ form1}}
+
+                        </div>
+
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input mt-2" id="exampleCheck1">
+                            <label class="form-check-label" for="remeber">I've read and accept the <a href="#">Terms and Condition</a><span class="requre text-danger">*</span></label>
+                        </div>
+                        <button type="submit" class="btn log-regi-btn my-4">Register</button>
+                        {{ form1.email.errors}}
+                        {{ form1.non_field_errors}}
+                    </form>
+                    {% endif %}
+                    <a class="login-link" href="#">Beacume a vendor </a>
+                    <!-- Register section area end -->
+                </div>
+
+            </div>
+        </div>
+                            {% endif %}
+
+    </section>
+    <!-- Login register page content end  -->
+
+
+
+
+</body>
+{% endblock  %}
+</html>

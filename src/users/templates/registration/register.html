@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block body %}
+   <!-- Login register page content start  -->
+
+                    <!-- Register section area start -->
+ <div class="container center">
+            <div class="row">
+                <div class="col-lg-6 col-12">
+                    <h2>Register</h2>
+                    <form class="logi-regi-form" action="{% url 'auth:register' %}" method="POST">
+                        {% csrf_token %}
+
+                        <div class="form-group">
+
+                            <label for="username">Username or email address <span class="requre text-danger">*</span></label>
+                               {{form.username}}
+
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Password <span class="requre text-danger">*</span></label>
+                                                           {{form.password}}
+
+                        </div>
+                          <div class="form-group">
+                            <label for="exampleInputPassword2">Password <span class="requre text-danger">*</span></label>
+                                                           {{form.password2}}
+
+                        </div>
+                        <div class="form-group">
+                            <label for="username">Email address <span class="requre text-danger">*</span></label>
+                               {{form.email}}
+
+                        </div>
+
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input mt-2" id="exampleCheck1">
+                            <label class="form-check-label" for="remeber">I've read and accept the <a href="#">Terms and Condition</a><span class="requre text-danger">*</span></label>
+                        </div>
+                        <button type="submit" class="btn log-regi-btn my-4">Register</button>
+                        <button type="submit" class="btn log-regi-btn my-4">Register</button>
+
+                    </form>
+
+                    <a class="login-link" href="#">Beacume a vendor </a>
+                    <!-- Register section area end -->
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+    <!-- Login register page content end  -->
+{% endblock %}

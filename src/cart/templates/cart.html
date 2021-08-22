@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+{% extends 'product/base.html' %}
+{% load static %}
+<html lang="en">
+
+
+
+{% block  body %}
+<body class="body-class">
+
+<!-- Mini cart summary section start  -->
+<div class="cart-info-base" id="cart-info-base">
+    <!-- Cart information start  -->
+        <div role="button" id="close-btn" class="close-btn" >
+        <a class="close__toggle" href="#"><i class="fal fa-times"></i></a>
+    </div>
+    <div class="card-info-wrap">
+        <div class="cart-info-itmes border-bt">
+            <!-- Items list start start  -->
+            <div class="cart-info-img">
+                <a href="#"><img class="img-fluid" src="/assets/images/woo.jpeg" alt="product-title"></a>
+            </div>
+            <div class="cart-info-content">
+                <a class="product-title" href="#">مبخر خشبي (غلايا</a>
+                <dl>
+                    <dt class="sold-by">Sold By:</dt>
+                    <dd class="shop-name">
+                        Wahed Nur
+                    </dd>
+                </dl>
+                <span class="qty-price">1 x <span class="price">
+                        <bdi>
+                            8000.00
+                        </bdi> SR
+                    </span></span>
+            </div>
+            <div class="cart-info-item-remove">
+                <a href="#"><i class="fas fa-times"></i></a>
+            </div>
+        </div> <!-- Items list start end  -->
+        <div class="cart-info-itmes border-bt">
+            <!-- Items list start start  -->
+            <div class="cart-info-img">
+                <a href="#"><img class="img-fluid" src="/assets/images/woo.jpeg" alt="product-title"></a>
+            </div>
+            <div class="cart-info-content">
+                <a class="product-title" href="#">مبخر خشبي (غلايا</a>
+                <dl>
+                    <dt class="sold-by">Sold By:</dt>
+                    <dd class="shop-name">
+                        Wahed Nur
+                    </dd>
+                </dl>
+                <span class="qty-price">1 x <span class="price">
+                        <bdi>
+                            8000.00
+                        </bdi> SR
+                    </span></span>
+            </div>
+            <div class="cart-info-item-remove">
+                <a href="#"><i class="fas fa-times"></i></a>
+            </div>
+        </div> <!-- Items list start end  -->
+        <div class="cart-info-itmes border-bt">
+            <!-- Items list start start  -->
+            <div class="cart-info-img">
+                <a href="#"><img class="img-fluid" src="/assets/images/woo.jpeg" alt="product-title"></a>
+            </div>
+            <div class="cart-info-content">
+                <a class="product-title" href="#">مبخر خشبي (غلايا</a>
+                <dl>
+                    <dt class="sold-by">Sold By:</dt>
+                    <dd class="shop-name">
+                        Wahed Nur
+                    </dd>
+                </dl>
+                <span class="qty-price">1 x <span class="price">
+                        <bdi>
+                            8000.00
+                        </bdi> SR
+                    </span></span>
+            </div>
+            <div class="cart-info-item-remove">
+                <a href="#"><i class="fas fa-times"></i></a>
+            </div>
+        </div> <!-- Items list start end  -->
+    </div>
+    <!-- Cart information end  -->
+    <!-- Price information -->
+    <div class="cart-info-price">
+        <strong>Subtotal: </strong>
+        <span class="cart-info-subtotal">
+            <bdi>
+                18000.99
+                <span class="cart-info-currency-symbol">
+                    SR
+                </span>
+            </bdi>
+        </span>
+    </div>
+    <div class="cart-info-button btn-group">
+        <a class="info-view-cart info-btn" href="#">View cart</a>
+        <a class="info-checkout info-btn" href="#">Checkout</a>
+    </div>
+</div>
+<!-- Mini cart summary section end  -->
+<!-- Cart section start -->
+<section class="cart-section my-5">
+    <div class="container">
+        {% if not cart_items %}
+        <h2> Your shopping Cart Is Empty</h2>
+        <br>
+        <div class="text-center">
+            <a href="{% url 'products:pro_list' %}"class="btn btn-primary">
+                Continue Shopping
+            </a>
+        </div>
+
+
+        {% else %}
+        <div class="row">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="m-none">
+                        <tr>
+                            <th></th>
+                        <th></th>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    {% for item in cart_items %}
+                    <tbody>
+                       <tr>
+                           <td><a href="{% url 'cart:remove_cart_item' item.product.id item.id %}" class="remove"> <i class="fal fa-times-circle"></i></a></td>
+                           <td class="product-img m-none"><a href=""><img class="img-fluid" src="{{ item.product.PRDIMG.url}}" alt=""></a></td>
+                           <td>
+                               <a href="{{ item.product.get_absolute_url}}" class="product-title">
+                                   {{ item }}                               </a>
+                               <dl class="variation">
+                                   {% for items in item.variations.all %}
+                                   <dt class="sold-by">{{ items.variation_category}}: {{items.variation_vale}}</dt>
+{% endfor %}
+                               </dl>
+                           </td>
+                           <td>
+                               <span class="price-amount amount">
+                                   <bdi>{{item.product.PRDPrice |floatformat:0}}</bdi>
+                                   <span class="price-simbole">
+                                       SR
+                                   </span>
+                               </span>
+
+
+                 <td>
+
+<div class="col">
+    <div class="row">
+        <div class="col-md-6">
+
+        </div>
+                               <a href="{% url 'cart:remove_cart' item.product.id item.id %}" > <span class="mr-5"><i class="fa fa-minus"></i>  </span> </a>
+                               <form action="{% url 'cart:add_cart' item.product.id %}" method="POST">
+
+                                   {%csrf_token%}
+                                   {% for items in item.variations.all %}
+                                   <input type="hidden" name="{{items.variation_category}}" value="{{items.variation_vale}}">
+
+                                   {%endfor %}
+                                  <input class="to" type="text" value="{{item.quantity}}" title="qty" min="0" max="5" size="6" placeholder="" inputmode="numeric">
+
+                                <button type="submit" value="v"><input type="hidden"><i class="fa fa-plus" aria-hidden="true"></i>
+ </button>
+                               </form>
+                                        </div>
+</div>
+
+                           </td>
+
+
+                              <td>
+                               <span class="sub-total">
+                                   <bdi>
+                                       {{ item.product.PRDPrice | floatformat:0}} ddddSR
+                                       <span class="price-simbole"></span>
+                                   </bdi>
+                               </span>
+                           </td>
+
+                       </tr>
+
+                       <tr>
+                           <td colspan="6">
+                               <form method="POST" action="">
+
+                                   <div class="coupon-section">
+                                       <input name class="coupone" type="text" placeholder="Coupon code">
+                                       <button type="submit" class="coupon-btn">Apply Coupone</button>
+                                   </div>
+                               </form>
+                           </td>
+                       </tr>
+
+
+                    </tbody>
+
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="cart-total-section container">
+               <div class="row mt-4">
+                   <div class="col-lg-6 offset-lg-6 col-md-12">
+                    <h2 class="cart-total">Cart Totals</h2>
+                    <table class="table shipping-table">
+                        <tbody>
+                            <tr>
+                                <td class="m-none">Subtotal</td>
+                                <td>
+                                    <bdi>
+                                        {{ total  }}ddd
+                                        <span class="currency-symbol">
+                                            SR
+                                        </span>
+                                    </bdi>
+
+                                </td>
+                            </tr>
+                             <tr>
+                                <td class="m-none">Tax</td>
+                                <td>
+                                    <bdi>
+                                         {{ tax |floatformat:0 }}
+                                        <span class="currency-symbol">
+                                            SR
+                                        </span>
+                                    </bdi>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="m-none">Shipping</td>
+                                <td>
+                                    <a class="shipping-btn" href="#">Calculate shipping</a>
+                                    <div class="shpping-method">
+                                        <select name="country" class="countries" id="countryId">
+                                            <option value="">Select Country</option>
+                                        </select>
+                                        <select name="state" class="states" id="stateId">
+                                            <option value="">Select State</option>
+                                        </select>
+                                        <select name="city" class="cities" id="cityId">
+                                            <option value="">Select City</option>
+                                        </select>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="m-none">Total</td>
+                                <td>
+                                    <bdi>
+
+                                         {{ total_tex |floatformat:1 }}
+
+
+                                        <span class="currency-symbol">
+                                            SR
+                                        </span>
+                                    </bdi>
+
+                                </td>
+
+                            </tr>
+                            <tr class="process-btn">
+                                <td colspan="2" class="checkout-btn-td">
+                                    <a href="{% url 'cart:checkout' %}" class="process-checkout-btn">Proceed to checkout</a>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+               </div>
+               </div>
+            </div>
+
+        </div>
+        {% endif %}
+    </div>
+</section>
+<!-- Cart section end -->
+
+
+
+    <!-- body bottom javascript start  -->
+    <script type="text/javascript" src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/slick.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/fontawesome.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/aos2.3.4.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/wow.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
+    <script src="{% static 'js/countrystatecity.js' %}"></script>
+
+
+    <!-- body bottom javascript end  -->
+</body>
+{% endblock  %}
+</html>
