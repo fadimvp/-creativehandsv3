@@ -118,11 +118,11 @@ def Login(request):
                     return redirect(next_page)
                 print ('=============',params)
             except:
-                return redirect('account:login')
+                return redirect('cart:checkout')
 
         else:
             messages.error(request, 'incorrect password try again ')
-            return redirect('account:login')
+            return redirect('cart:checkout')
 
     context = {
 
@@ -158,7 +158,7 @@ def activate(request, uidb64, token):
         messages.error(request, 'invalid activation link')
         return redirect('account:register')
 
-
+# if you forget  password  send  token  to your email
 def forgotpass(request):
     if request.method == 'POST':
         email = request.POST['email']
@@ -168,9 +168,9 @@ def forgotpass(request):
             current_site = get_current_site(request)
             mail_subject = "rest your Password  "
             message = render_to_string('rest_password_valid.html', {
-                'user': user,
-                'domain': current_site,
-                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                'user': user,                                          # get user  request
+                'domain': current_site,                                # get  domain name
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)),     # generator user id unique
                 'token': default_token_generator.make_token(user),
             })
             to_email = email

@@ -6,6 +6,7 @@
 
 {% block body%}
 
+
 <section class="checkout">
     <div class="checout-space"></div>
     <div class="container">
@@ -32,7 +33,6 @@
                                     <div class="pre-login">
                                         <label for="for-user">Username or email <span
                                                 class="requred text-danger">*</span></label>
-                                        <input type="text" class="form-control" required>
                                     </div>
                                 </div>
                             </div>
@@ -41,13 +41,11 @@
                                     <div class="pre-login">
                                         <label for="for-user">Password <span
                                                 class="requred text-danger">*</span></label>
-                                        <input type="text" class="form-control" required>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="login-action-section mt-2">
-                                    <input type="checkbox">
                                     <label for="loging-save">Remember me</label>
                                     <div class="action-section">
                                         <button class="login-btn">Login</button>
@@ -76,7 +74,6 @@
                             <div class="col-md-10 col-lg-5">
                                 <div class="coupone-section">
                                     <div class="coupone-group">
-                                        <input type="text" class="coupon-input">
                                         <button class="coupon-btn" type="submit" value="Apply coupon"
                                                 name="apply_coupon">Apply coupon
                                         </button>
@@ -98,14 +95,11 @@
                 <h3 class="billing-title">Billing details</h3>
                 <div class="billing-form w-100">
                     <div class="user-group">
+
                         <div class="first-name">
-                            <label for="first-name">First name <span class="text-danger">*</span></label>
-                            <input name="first_name" type="text" class="form-control">
+                            <label for="first-name">First name <span class="text-danger">: {{order2.full_name }}</span></label>
                         </div>
-                        <div class="last-name">
-                            <label for="last-name">Last name <span class="text-danger">*</span></label>
-                            <input name="last_name" type="text" class="form-control">
-                        </div>
+
                     </div>
                     <div class="country mt-3">
                         <!--                        <select name="country" class="countries form-control" id="countryId">-->
@@ -113,49 +107,39 @@
                         <!--                        </select>-->
                         <div class="last-name">
                             <label for="country">country <span class="text-danger">*</span></label>
-                            <input name="country" class="countries form-control" id="countryId" type="text"
                                    class="form-control">
                         </div>
                     </div>
                     <div class="street-address mt-3">
-                        <label for="street-address">Street address <span class="text-danger">*</span></label>
-                        <input name="address_1" type="text" class="form-control"
-                               placeholder="House number and street name">
-                        <input name="address_2" type="text" class="form-control mt-3"
-                               placeholder="Apartment, suite, unit, etc. (optional)">
+                        <label for="street-address">Street address <span class="text-danger">:  {{order2.address_1 }}</span></label><br>
+
+                        <label for="street-address">Street address <span class="text-danger">:  {{order2.address_2 }}</span></label>
                     </div>
                     <div class="town-city mt-3">
-                        <label for="town-city">Town d.d./ City <span class="text-danger">*</span></label>
-                        <input name="city" type="text" class="form-control">
+                        <label for="town-city">Town d.d./ City <span class="text-danger">: {{order2.city }}</span></label>
 
                     </div>
                     <div class="postcode mt-3">
-                        <label for="postcode-zip">Postcode / ZIP <span class="text-danger">*</span></label>
-                        <input name="state" type="state" class="form-control">
+                        <label for="postcode-zip">Postcode / ZIP <span class="text-danger">{{order2.state }}</span></label>
 
                     </div>
                     <div class="phone mt-3">
-                        <label for="phone">Phone <span class="text-danger">*</span></label>
-                        <input name="phone" type="tel" class="form-control">
+                        <label for="phone">Phone <span class="text-danger">: {{order2.phone }}</span></label>
 
                     </div>
                     <div class="email mt-3">
-                        <label for="email">email <span class="text-danger">*</span></label>
-                        <input name="email" type="email" class="form-control">
+                        <label for="email">email <span class="text-danger">:{{order2.email }}</span></label>
 
                     </div>
 
                 </div>
-                <button class="dif-ship-btn mt-3">
-                    <input type="checkbox" id="dif-address-btn">
-                    <label for="checkbox">Ship to a different address?</label>
-                </button>
+
                 <div class="different-address w-100">
                     <div class="billing-form w-100">
                         <div class="user-group">
                             <div class="first-name">
-                                <label for="first-name">First name <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" >
+                                <label for="first-name">First name <span class="text-danger">:</span></label>
+                                <input type="text" class="form-control">
                             </div>
                             <div class="last-name">
                                 <label for="last-name">Last name <span class="text-danger">*</span></label>
@@ -195,10 +179,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="note w-100">
-                    <label for="note">Order notes (optional)</label>
-                    <textarea name="order_note" id="note" class="form-control"></textarea>
-                </div>
+
         </div>
 
         <div class="order-review">
@@ -351,20 +332,14 @@
                     </ul>
                     <div class="confirmation">
                         <p>
-                            <input name="i_agree" type="checkbox" required>
-                            <label for="confirm">I have read and agree to the website <a href="#">terms and
-                                conditions</a> <span class="requred text-danger">*</span>
-                            </label>
+
                         </p>
                         <div id="paypal-button-container"></div>
-                        <button class="form-control place-btn" type="submit"> place order</button>
+
                                  {{order2.order_number}}
 
                         ++++++++++++++++++++++++++++++++++++++
-                                        {{order.order_number}}                        {% for od in order %}
-                        {{od.order_number}}
 
-                        {% endfor%}
                     </div>
                 </div>
             </div>
@@ -395,7 +370,8 @@
 
         // Render the PayPal button into #paypal-button-container
         var amount = {{total_tex}}
-        var names = {{oder}}
+        var names = {{order2.order_number}}
+        var order_number = {{order2.order_number}}
         var url = "{% url 'order:payments' %}"
         var csrftoken = getCookie('csrftoken');
         var payment_method = "PayPal"
@@ -437,8 +413,9 @@
                     names:names,
                     transID:orderData.id,
                     payment_method:payment_method,
-                    transtID:orderData.status,
-                    amount:amount
+                    statUs:orderData.status,
+                    amount:amount,
+                    order_number:order_number
                     }),
                     })
               //  .then(response => response.json())

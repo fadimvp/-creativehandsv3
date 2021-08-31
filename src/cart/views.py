@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 # Create your views here.
 from django.urls import reverse
 from product.models import Product, Variation, Alternative
+from orders.models import Order
 from .models import Cart, CartItems
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import messages
@@ -188,6 +189,7 @@ def CartView(request, total=0, quantity=0, tax=0, cart_items=None):
                 total += (cart_item.product.PRDPrice * cart_item.quantity)
                 quantity += cart_item.quantity
                 tax += (total) * (cart_item.product.tax)
+                tax += (total) * (cart_item.product.tax)
                 print(total,"dklslfkds")
             total_tex = (total + tax)
 
@@ -244,7 +246,11 @@ def remove_cart_item(request, product_id, cart_item_id):  # remove all items in 
     return redirect('cart:cart_item')
 
 @login_required(login_url='account:login')
-def checkout(request, total=0, quantity=0, tax=0, cart_items=None):
+def checkout(request, total=0, quantity=0, tax=0, cart_items=None,):
+    current_user = request.user
+
+    order = Order.objects.filter(user=current_user,is_order=False)
+
     try:
         total = 0
         quantity = 0
@@ -270,6 +276,7 @@ def checkout(request, total=0, quantity=0, tax=0, cart_items=None):
         'total': total,
         'tax': tax,
         'total_tex': total_tex,
+        'order':order,
 
     }
     return render(request, 'checkout.html', context)

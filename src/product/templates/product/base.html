@@ -196,10 +196,11 @@
     <!-- Cart information end  -->
     <!-- Price information -->
     <div class="cart-info-price">
-        <strong>Subtotal: </strong>
+        <strong>Subtotal: {{ total_tex |floatformat:1 }} </strong>
         <span class="cart-info-subtotal">
             <bdi>
-                                                         {{ total_tex |floatformat:1 }}
+
+
                 <span class="cart-info-currency-symbol">
                     SR
                 </span>
@@ -292,18 +293,47 @@
 </footer>
 <!-- Footer Section end  -->
 
+  <div id="navbar"><span>Red Stapler - Geolocation API</span></div>
+  <div id="wrapper">
+    <button id="location-button">Get User Location</button>
+    <div id="output"></div>
+  </div>
+
+  </body>
+</html>
 
 <!-- body bottom javascript start  -->
+
 <script src="https://polyfill.io/v3/polyfill.min.js?features=fetch"></script>
 <script src="https://cdn.moyasar.com/mpf/1.2.0/moyasar.js"></script>
+
 <script type="text/javascript" src=" {% static 'js/jquery-3.5.1.min.js' %}"></script>
 <script type="text/javascript" src=" {% static 'js/bootstrap.bundle.min.js' %}"></script>
 <script type="text/javascript" src=" {% static 'js/slick.js' %}"></script>
 <script type="text/javascript" src=" {% static 'js/fontawesome.js' %}"></script>
 <script type="text/javascript" src=" {% static 'js/aos2.3.4.js' %}"></script>
+
 <script type="text/javascript" src=" {% static 'js/owl.carousel.min.js' %}"></script>
 <script type="text/javascript" src=" {% static 'js/wow.min.js' %}"></script>
 <script type="text/javascript" src=" {% static 'js/main.js' %}"></script>
+
+<script>
+     $('#location-button').click(function(){
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position){
+                  console.log(position,"sddsd");
+                  $.get( "http://maps.googleapis.com/maps/api/geocode/json?latlng="+ position.coords.latitude + "," + position.coords.longitude +"&sensor=false", function(data) {
+                    console.log(data);
+                  })
+                  var img = new Image();
+                  img.src = "https://maps.googleapis.com/maps/api/staticmap?center=" + position.coords.latitude + "," + position.coords.longitude + "&zoom=13&size=800x400&sensor=false";
+                  $('#output').html(img);
+                });
+
+            }
+ });
+</script>
 
 
 <!-- body bottom javascript end  -->

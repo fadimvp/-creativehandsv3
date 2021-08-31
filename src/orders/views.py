@@ -7,7 +7,7 @@ from cart.models import CartItems
 from .forms import OrderForm
 import geoip2.database
 # Create your views here.
-from .models import Order
+from .models import Order, Payment
 import datetime
 
 
@@ -31,12 +31,9 @@ def place_order(request, total=0, quantity=0):
         messages.success(request, 'thank you for order  ')
 
         if request.method == 'POST':
-            form = OrderForm(request.POST)
-
+            form = OrderForm(request.POST or None)
             if form.is_valid() and data.i_agree != True:
-
                 data = Order()
-
                 data.user = current_user
                 data.first_name = form.cleaned_data['first_name']
                 data.last_name = form.cleaned_data['last_name']
@@ -57,22 +54,16 @@ def place_order(request, total=0, quantity=0):
                 json.dumps(d)
                 data.ip = d
                 print(d)
-
                 if data.i_agree != True:
                     data.i_agree = form.cleaned_data['i_agree']
                     data.i_agree == True
                     print('=======================i_agree=======', data.i_agree)
                     data.save()
-
                 else:
                     print('=======================else =======', data.i_agree)
-
                     data.save()
-
                 data.save()
-
                 # Generate odder number
-
                 yr = int(datetime.date.today().strftime('%Y'))
                 mt = int(datetime.date.today().strftime('%m'))
                 dt = int(datetime.date.today().strftime('%d'))
@@ -81,19 +72,42 @@ def place_order(request, total=0, quantity=0):
                 order_number = current_date + str(data.id)
                 data.order_number = order_number
                 data.save()
-                order = Order.objects.get(user=current_user, is_order=False, order_number=order_number)
+                order2 = Order.objects.get(user=current_user, is_order=False, order_number=order_number)
+                print(order2.order_number)
                 context = {
-                    'order': order,
+                    'data':data,
+                    'order2': order2,
                     'cart_items': cart_items,
                     'tax': tax,
                     'total': total,
                     'total_tex': total_tex,
                 }
-                return redirect('cart:checkout')
-            return redirect('cart:checkout')
+
+            return render(request, 'payments.html', context)
+
         else:
             return redirect('cart:checkout')
 
 
 def payments(request):
-    pass
+    body = json.loads(request.body or None)
+    order = Order.objects.get(user=request.user, is_order=False,order_number=body['names'])
+    print(body)
+    payment = Payment(
+        user=request.user,
+        payment_id=body['transID'],
+        payment_method=body['payment_method'],
+        status=body['statUs'],
+        order_number=body['order_number'],
+        amount_paid=order.total,
+
+    )
+    payment.save()
+    order.payment = payment
+    order.is_order = True
+    order.save()
+    context = {
+        'body': body,
+    }
+
+    return render(request, 'payments.html', context)

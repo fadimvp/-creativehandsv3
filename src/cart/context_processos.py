@@ -21,7 +21,7 @@ def counter(request):
         except Cart.DoesNotExist:
             cart_count = 0
     return dict(cart_count=cart_count)
-
+#
 #
 # def cart(request, total=0, quantity=0, tax=0, cart_items=None):
 #     try:
@@ -46,7 +46,8 @@ def counter(request):
 #     context = {
 #         'cart_items': cart_items,
 #         'quantity':quantity,
+#         'total_tex':total_tex
 #
 #
 #     }
-    return dict(context)
+#     return dict(context)
