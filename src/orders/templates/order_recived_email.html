@@ -1,0 +1,18 @@
+
+
+ {% load i18n %}
+{% autoescape off %}
+ <a>
+
+{% block body %}
+Hi {{ user.first_name}},
+YOUR ORDER HAS BEEN RECEIVED
+
+ OrderNumber : {{order.order_number}}
+
+
+thanks
+{% endblock  %}
+   </a>
+
+{% endautoescape %}

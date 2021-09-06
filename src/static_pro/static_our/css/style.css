@@ -10,6 +10,56 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: WS, Wahed Nur, Boilerplate, HTML5, CSS,
 
 */
+.rating > input{
+display:none;
+}
+.rating{
+display:inline-block;
+border:0;
+  border-color: red;
+
+}
+.rating > label {
+float:right;
+}
+.rating > label:before{
+ display:block;
+ font-size:2.1rem;
+
+    content: '\f005';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    margin:0;
+    padding:0.3rem  .2rem;
+    cursor:pointer;
+      border-color: red;
+}
+/* half start */
+.rating .half:before {
+    content:'\f089';
+    position:absolute;
+    padding-right:0;
+    float:left;
+
+}
+/*  click  and hover */
+input:checked ~ label,label:hover ~ label{
+color:#ffb503;
+
+}
+/* hover hightlight */
+input:checked +  label:hover, input:checked ~ label:hover,input:checked ~ label:hover ~label,
+ label:hover ~ input:checked ~ label{
+ color: #cc9000;
+
+}
+.svg-inline--fa.fa-star.fa-w-18{
+float:right;
+display:block
+}
+.rev{
+ display:block;
+}
 .card-img-top{
 width:172px;
 height:172px;

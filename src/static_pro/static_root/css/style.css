@@ -10,6 +10,28 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: WS, Wahed Nur, Boilerplate, HTML5, CSS,
 
 */
+.rating > input{
+display:none;
+}
+.rating{
+display:inline-block;
+border:0;
+}
+.rating > label{
+float:right;
+}
+.rating > label:before{
+ display:inline-block;
+ font-size:1.1rem;
+ content:"\f005";
+ margin:0;
+ padding:0.3rem  .2rem;
+ cursor:pointer;
+}
+.card-img-top{
+width:172px;
+height:172px;
+}
 @import url("https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap");
 /* Global variable section start */
 .heading-title {

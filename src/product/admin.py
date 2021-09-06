@@ -1,5 +1,7 @@
 from django.contrib import admin
-from .models import Product, Product_Img, Category,Variation, Alternative, Product_Accessories
+from .models import Product, Product_Img, Category,Variation, Alternative, Product_Accessories,ReviewRating
+
+
 
 
 # Register your models here.
@@ -25,4 +27,5 @@ admin.site.register(Variation,VariationAdmin)
 admin.site.register(Product_Img)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Alternative)
-admin.site.register(Product_Accessories)
+admin.site.register(ReviewRating)
+# admin.site.register(Product_Accessories)

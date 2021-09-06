@@ -97,7 +97,7 @@
                     <div class="user-group">
 
                         <div class="first-name">
-                            <label for="first-name">First name <span class="text-danger">: {{order2.full_name }}</span></label>
+                            <label for="first-name">First name <span class="text-danger">: {{order.full_name }}</span></label>
                         </div>
 
                     </div>
@@ -106,29 +106,28 @@
                         <!--                            <option value="Saudi Arabia" title="Saudi Arabia">Select Country</option>-->
                         <!--                        </select>-->
                         <div class="last-name">
-                            <label for="country">country <span class="text-danger">*</span></label>
-                                   class="form-control">
+                            <label for="country">country <span class="text-danger">:{{order.country}} </span></label>
                         </div>
                     </div>
                     <div class="street-address mt-3">
-                        <label for="street-address">Street address <span class="text-danger">:  {{order2.address_1 }}</span></label><br>
+                        <label for="street-address">Street address <span class="text-danger">:  {{order.address_1 }}</span></label><br>
 
-                        <label for="street-address">Street address <span class="text-danger">:  {{order2.address_2 }}</span></label>
+                        <label for="street-address">Street address <span class="text-danger">:  {{order.address_2 }}</span></label>
                     </div>
                     <div class="town-city mt-3">
-                        <label for="town-city">Town d.d./ City <span class="text-danger">: {{order2.city }}</span></label>
+                        <label for="town-city">Town d.d./ City <span class="text-danger">: {{order.city }}</span></label>
 
                     </div>
                     <div class="postcode mt-3">
-                        <label for="postcode-zip">Postcode / ZIP <span class="text-danger">{{order2.state }}</span></label>
+                        <label for="postcode-zip">Postcode / ZIP <span class="text-danger">{{order.state }}</span></label>
 
                     </div>
                     <div class="phone mt-3">
-                        <label for="phone">Phone <span class="text-danger">: {{order2.phone }}</span></label>
+                        <label for="phone">Phone <span class="text-danger">: {{order.phone }}</span></label>
 
                     </div>
                     <div class="email mt-3">
-                        <label for="email">email <span class="text-danger">:{{order2.email }}</span></label>
+                        <label for="email">email <span class="text-danger">:{{order.email }}</span></label>
 
                     </div>
 
@@ -336,7 +335,7 @@
                         </p>
                         <div id="paypal-button-container"></div>
 
-                                 {{order2.order_number}}
+                                 {{order.order_number}}
 
                         ++++++++++++++++++++++++++++++++++++++
 
@@ -370,10 +369,10 @@
 
         // Render the PayPal button into #paypal-button-container
         var amount = {{total_tex}}
-        var names = {{order2.order_number}}
-        var order_number = {{order2.order_number}}
+        var order_number = {{order.order_number}}
         var url = "{% url 'order:payments' %}"
         var csrftoken = getCookie('csrftoken');
+        var redirect_url = "{% url "order:order_complete" %}"
         var payment_method = "PayPal"
         paypal.Buttons({
            style: {
@@ -410,7 +409,6 @@
 
                     },
                     body:JSON.stringify({
-                    names:names,
                     transID:orderData.id,
                     payment_method:payment_method,
                     statUs:orderData.status,
@@ -418,8 +416,13 @@
                     order_number:order_number
                     }),
                     })
-              //  .then(response => response.json())
-              //    .then(data => console.log(data));
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:' ,data);
+                    console.log('Transaction Completed ');
+                    window.location.href = redirect_url + '?order_number='+data.order_number+'&payment_id='+data.transID;
+
+                });
 
 
 

@@ -1,7 +1,6 @@
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 
-
 # Create your views here.
 from django.urls import reverse
 from product.models import Product, Variation, Alternative
@@ -36,9 +35,9 @@ def add_cart(request, product_id):  # get product.id to  url
         print("فى حاله عدم تغير ")
 
         product = Product.objects.get(id=product_id)
-        product.stock -= 1                           # if you auth decrement one from stock
-        if product.stock == -1:
-            return redirect('cart:cart_item')
+        # product.stock -= 1  # if you auth decrement one from stock
+        # if product.stock == -1:
+        #     return redirect('cart:cart_item')
         product.save()
 
         product_variation = []
@@ -111,9 +110,9 @@ def add_cart(request, product_id):  # get product.id to  url
             cart = Cart.objects.get(
                 cart_id=_cart_id(request))  # get the  cart using the cart_id present  in the session
             product = Product.objects.get(id=product_id)
-            product.stock -= 1
-            if product.stock == -1:
-                return redirect('cart:cart_item')
+            # product.stock -= 1
+            # if product.stock == -1:
+            #     return redirect('cart:cart_item')
             product.save()
 
             cart.save()
@@ -189,8 +188,7 @@ def CartView(request, total=0, quantity=0, tax=0, cart_items=None):
                 total += (cart_item.product.PRDPrice * cart_item.quantity)
                 quantity += cart_item.quantity
                 tax += (total) * (cart_item.product.tax)
-                tax += (total) * (cart_item.product.tax)
-                print(total,"dklslfkds")
+                print(total, "dklslfkds")
             total_tex = (total + tax)
 
 
@@ -245,28 +243,32 @@ def remove_cart_item(request, product_id, cart_item_id):  # remove all items in 
     cart_item.delete()
     return redirect('cart:cart_item')
 
+
 @login_required(login_url='account:login')
-def checkout(request, total=0, quantity=0, tax=0, cart_items=None,):
+def checkout(request, total=0, quantity=0, tax=0, cart_items=None, ):
     current_user = request.user
-
-    order = Order.objects.filter(user=current_user,is_order=False)
-
+    order = Order.objects.filter(user=current_user, is_order=False)
     try:
-        total = 0
-        quantity = 0
-        tax = 0
-        if request.user.is_authenticated:
 
+        if request.user.is_authenticated:
             cart_items = CartItems.objects.filter(user=request.user)
         else:
             cart = Cart.objects.get(cart_id=_cart_id(request))
-
             cart_items = CartItems.objects.filter(cart=cart)
+        total1 = 0
         for cart_item in cart_items:
+            total = 0
+            quantity = 0
+
             total += (cart_item.product.PRDPrice * cart_item.quantity)
+            total1 += (cart_item.product.PRDPrice * cart_item.quantity)
+            print(total)
             quantity += cart_item.quantity
+            print(quantity, "dsdsd")
             tax += (total) * (cart_item.product.tax)
-        total_tex = (total + tax)
+
+            total_tex = (total1 + tax)
+        print(total_tex, "total")
 
     except ObjectDoesNotExist:
         total_tex = (total + tax)
@@ -276,7 +278,7 @@ def checkout(request, total=0, quantity=0, tax=0, cart_items=None,):
         'total': total,
         'tax': tax,
         'total_tex': total_tex,
-        'order':order,
+        'order': order,
 
     }
     return render(request, 'checkout.html', context)

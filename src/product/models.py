@@ -7,6 +7,7 @@ from django.db.models.signals import post_save
 from django.urls import reverse
 from django.utils.text import slugify
 from PIL import Image
+from account.models import Account
 
 # Create your models here.
 
@@ -24,7 +25,7 @@ User = settings.AUTH_USER_MODEL
 #         return self.get_queryset().PRDName()
 class Product(models.Model):
     # objects =ProductManger()
-    user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     PRDName = models.CharField(max_length=75)
     PRDVandor_Name = models.CharField(max_length=75)
     PRDCategory = models.ForeignKey('Category', on_delete=models.CASCADE, blank=True, null=True)
@@ -63,9 +64,6 @@ class Product(models.Model):
     height = models.DecimalField(decimal_places=2, default=0, max_digits=100)
     width = models.DecimalField(decimal_places=2, default=0, max_digits=100)
 
-    def __str__(self):
-        return str(self.PRDName)
-
     def save(self, *args, **kwargs):
         def save(self, *args, **kwargs):
 
@@ -76,7 +74,6 @@ class Product(models.Model):
                     self.PRDSlug = self.arabic_slugify(self.PRDVandor_Name)
 
             super(Product, self).save(*args, **kwargs)
-
 
     def __str__(self):
         return self.PRDName
@@ -93,27 +90,29 @@ class Product(models.Model):
 
 var_category_choice = (
     ("color", "color"),
-    ("size","size"),
+    ("size", "size"),
 
 )
 
+
 class VarationManger(models.Manager):
     def colors(self):
-        return super(VarationManger,self).filter(variation_category='color',is_active=True)
-    def sizes (self):
-        return super(VarationManger,self).filter(variation_category='size',is_active=True)
+        return super(VarationManger, self).filter(variation_category='color', is_active=True)
+
+    def sizes(self):
+        return super(VarationManger, self).filter(variation_category='size', is_active=True)
+
 
 class Variation(models.Model):
-    product = models.ForeignKey(Product,blank=True,on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, blank=True, on_delete=models.CASCADE)
     variation_category = models.CharField(max_length=100, choices=var_category_choice)
     variation_vale = models.CharField(max_length=100)
     is_active = models.BooleanField(default=True)
     create_date = models.DateTimeField(auto_now=True)
     objects = VarationManger()
+
     def __str__(self):
         return str(self.variation_vale)
-
-
 
     def get_absolute_url(self):
         return self.product.get_absolute_url()
@@ -143,20 +142,21 @@ class Product_Img(models.Model):
 
 
 class Category(models.Model):
-
     CATName = models.CharField(max_length=255)
     CATParent = models.ForeignKey('self', limit_choices_to={'CATParent__isnull': True}, on_delete=models.CASCADE,
                                   blank=True, null=True)
     CATDesc = models.TextField()
     slug = models.SlugField()
     CATImg = models.ImageField(upload_to='Category/')
-    def save(self,*args,**kwargs):
-        super().save(*args,**kwargs)
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
         img = Image.open(self.CATImg.path)
         if img.width > 200 or img.height > 200:
-            output_size =(200,200)
+            output_size = (200, 200)
             img.thumbnail(output_size)
             img.save(self.CATImg.path)
+
     class Meta:
         verbose_name = 'category'
         verbose_name_plural = 'categoryios'
@@ -164,10 +164,8 @@ class Category(models.Model):
     def get_url(self):
         return reverse('products:category_slug', args={self.slug})
 
-
     def __str__(self):
         return self.CATName
-
 
 
 class Alternative(models.Model):
@@ -184,3 +182,20 @@ class Product_Accessories(models.Model):
 
     def __str__(self):
         return str(self.PACCProduct)
+
+
+#   create review rating
+class ReviewRating(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    subject = models.CharField(max_length=100, blank=True)
+    user = models.ForeignKey(Account, on_delete=models.CASCADE)
+    review = models.CharField(max_length=100, blank=True)
+    rating = models.FloatField()
+    status = models.BooleanField(default=True)
+    ip = models.CharField(max_length=100, blank=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.subject

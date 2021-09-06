@@ -7,6 +7,8 @@ from product.models import Product, Variation
 
 class Payment(models.Model):
     user = models.ForeignKey(Account, on_delete=models.CASCADE)
+    # orderr = models.ForeignKey('Order', models.CASCADE,related_name='order')
+
     payment_id = models.CharField(max_length=100,blank=True,null=True)
     payment_method = models.CharField(max_length=100,blank=True,null=True)
     amount_paid = models.CharField(max_length=100,blank=True,null=True)
@@ -29,7 +31,7 @@ class Order(models.Model):
         ('Rejected', 'Rejected'),
 
     )
-    user = models.ForeignKey(Account, on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(Account, on_delete=models.CASCADE )
     payment = models.ForeignKey(Payment, on_delete=models.SET_NULL, null=True)
     order_number = models.CharField(max_length=100)
     first_name = models.CharField(max_length=100)
@@ -48,6 +50,8 @@ class Order(models.Model):
     ip = models.CharField(blank=True, max_length=20)
     is_order = models.BooleanField(default=False)
     i_agree =models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.first_name
@@ -57,15 +61,18 @@ class Order(models.Model):
 
 
 class OrderProduct(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)
+    order = models.ForeignKey(Order, models.CASCADE)
     payment = models.ForeignKey(Payment, on_delete=models.SET_NULL, null=True)
-    user = models.ForeignKey(Account, on_delete=models.SET_NULL, null=True)
-    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
-    variation = models.ForeignKey(Variation, on_delete=models.SET_NULL, null=True)
-    color = models.CharField(max_length=100)
-    size = models.CharField(max_length=100)
+    user = models.ForeignKey(Account, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    variations = models.ManyToManyField(Variation,blank=True)
+    # color = models.CharField(max_length=100)
+    # size = models.CharField(max_length=100)
     quantity = models.IntegerField()
-    product_price = models.CharField(max_length=100)
+    product_price = models.IntegerField()
+    ordered = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 
     def __str__(self):
