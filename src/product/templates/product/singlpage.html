@@ -165,27 +165,31 @@
                                 </div>
                             </div>
                         </div>
+
+             </form>
+
                         <div class="tab-pane fade" id="nav-review" role="tabpanel" aria-labelledby="nav-review-tab">
                             <div class="rev-title">
                                 Reviews
-                                <form  action="" method="POST">
+                                <form  action="{% url 'products:submit_review' pro_detail.id %}" method="POST">
+                                    {% csrf_token %}
                                     <h5> write your review </h5>
 
                                     <div class="col-md-8 center">
                       <!-- rating star-->
                                         <label>How do you rate this  product ? </label>
                                         <br>
-                                 <div class="rating">
-                                     <input  type="radio" name="rating " id="rating10" value="5" required><label  for="rating10" title="5"></label>
-                                     <input type="radio" name="rating" id="rating9" value="4.5" required> <label  for="rating9" title="4.5" class="half"></label>
-                                     <input type="radio" name="rating" id="rating8" value="4" required><label  for="rating8" title="4"></label>
-                                     <input type="radio" name="rating" id="rating7" value="3.5" required><label  for="rating7" title="3.5" class="half"></label>
-                                     <input type="radio" name="rating" id="rating6" value="3" required><label  for="rating6" title="3"></label>
-                                     <input type="radio" name="rating" id="rating5" value="2.5" required><label  for="rating5" title="2.5" class="half"></label>
-                                     <input type="radio" name="rating" id="rating4" value="2" required><label  for="rating4" title="2"></label>
-                                     <input type="radio" name="rating" id="rating3" value="1.5" required><label  for="rating3" title="1.5" class="half"></label>
-                                     <input type="radio" name="rating" id="rating2" value="1" required><label   for="rating2" title="1"></label>
-                                     <input type="radio" name="rating" id="rating1" value="0.5" required><label  for="rating1" title="0.5" class="half"></label>
+                                 <div class="rate">
+                                     <input  type="radio" name="rating " id="rating10" value="5" required/><label  for="rating10" title="5"></label>
+                                     <input type="radio" name="rating" id="rating9" value="4.5" required/> <label  for="rating9" title="4.5" class="half"></label>
+                                     <input type="radio" name="rating" id="rating8" value="4" required/><label  for="rating8" title="4"></label>
+                                     <input type="radio" name="rating" id="rating7" value="3.5" required/><label  for="rating7" title="3.5" class="half"></label>
+                                     <input type="radio" name="rating" id="rating6" value="3" required/><label  for="rating6" title="3"></label>
+                                     <input type="radio" name="rating" id="rating5" value="2.5" required/><label  for="rating5" title="2.5" class="half"></label>
+                                     <input type="radio" name="rating" id="rating4" value="2" required/><label  for="rating4" title="2"></label>
+                                     <input type="radio" name="rating" id="rating3" value="1.5" required/><label  for="rating3" title="1.5" class="half"></label>
+                                     <input type="radio" name="rating" id="rating2" value="1" required/><label   for="rating2" title="1"></label>
+                                     <input type="radio" name="rating" id="rating1" value="0.5" required/><label  for="rating1" title="0.5" class="half"></label>
 <!--                                        <span><i class="fas fa-star"></i></span>-->
 <!--                                        <span><i class="fas fa-star"></i></span>-->
 <!--                                        <span><i class="fas fa-star"></i></span>-->
@@ -195,19 +199,22 @@
                                         <br>
 
                                         <a class="rev">Review Title</a>
-                                        <input type="text" class="form-control" name="subject" required>
+                                        <input type="text" class="form-control" name="subject" >
                                         <br>
                                        <label >Review </label>
 
                                         <textarea name="review" rows="4" class="form-control" required></textarea>
                                         <br>
-                                        <input type="submit" value="Submit review" class="btn btn-primary">
+                                                                       <button type="submit">fdfldf</button>
+
 
 
                                     </div>
 
+                                      {% include 'alert.html' %}
 
                                 </form>
+
                             </div>
                             <p>There are no reviews yet.</p>
                             <p>Only logged in customers who have purchased this product may leave a review.</p>
@@ -226,8 +233,8 @@
             </div>
             <!-- Product description section end -->
         </div>
-        </form>
 </section>
+
 <!-- Sigle product page section end -->
 
 

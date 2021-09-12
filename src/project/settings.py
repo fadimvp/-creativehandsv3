@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os.path
 from pathlib import Path
-
+from django.utils.translation import ugettext_lazy as _
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     # 'orders.apps.SuitConfig',
     # 'cart.apps.SuitConfig',
     # 'account.apps.SuitConfig',
+    'modeltranslation',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,10 +44,16 @@ INSTALLED_APPS = [
     'settings',
     'account',
      'users',
+    'localflavor',
+    'home',
     'django_filters',
     'cart',
     'orders',
-    
+    #multi-lang
+    # 'parler',
+    "django_makemessages_xgettext",
+
+
 
 
 ]
@@ -58,6 +65,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'geoip2_extras.middleware.GeoIP2Middleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -146,12 +154,27 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
+LOCALE_PATHS=[
+    os.path.join(BASE_DIR,'locale'),
+]
+gettext = lambda s: s
+LANGUAGES = (
+    ('ar', gettext('Arabic')),
+    ('en', gettext('English')),
+)
+MODELTRANSLATION_LANGUAGES = ('ar', 'en')
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'ar'
+MODELTRANSLATION_PREPOPULATE_LANGUAGE = 'ar'
+MODELTRANSLATION_FALLBACK_LANGUAGES = ('ar',)
+MODELTRANSLATION_TRANSLATION_FILES = (
+    'product.translation',
+)
+MODELTRANSLATION_CUSTOM_FIELDS = ('PRDName', 'user',)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/

@@ -18,6 +18,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # path(r'^i18n/', include('django.conf.urls.i18n')),
+    path('i18n/', include('django.conf.urls.i18n')),
     path('', include('product.urls',namespace='products')),
     path('auth/',include('users.urls',namespace='auth')),
     path('cart/',include('cart.urls',namespace='cart')),

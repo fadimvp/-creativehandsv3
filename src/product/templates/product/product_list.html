@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 {% extends 'product/base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block body %}
 
@@ -43,7 +44,7 @@
         <div class="container">
             <div class="row">
                 <div class="heading-title">
-                    <h2>New Products</h2>
+                    <h2>{%  trans "New Products" %} </h2>
                     <span class="mr-md-auto">
                     Found <b>  {{ product_count}} </b> items
                     </span>
@@ -96,8 +97,7 @@
                                             {% else %}
 
                                             <div class="cart-btn"><a class="add-to-cart-btn"
-                                                                     href="{% url 'cart:add_cart' product.id %}">Add to
-                                                cart</a></div>
+                                                                     href="{% url 'cart:add_cart' product.id %}">{% trans "Add to cart" %} </a></div>
                                     </div>
                                 </div>
                                 {% endif %}
@@ -106,7 +106,7 @@
 
                     </ul>
 
-                    <a class="show-more-btn" href="{% url 'products:all_pro' %}">Show More</a>
+                    <a class="show-more-btn" href="{% url 'products:all_pro' %}">{% trans "Show More"  %}  </a>
                 </div>
             </div>
         </div>
@@ -117,7 +117,7 @@
         <div class="container">
             <div class="row">
                 <div class="heading-title">
-                    <h2>Featured Products</h2>
+                    <h2>{% trans "Featured Products"  %}  </h2>
                 </div>
 
                 <div class="new-product">
@@ -149,8 +149,8 @@
                                     </div>
                                     {% if pro_list %}
                                     <div class="cart-btn"><a class="add-to-cart-btn"
-                                                             href="{% url 'cart:add_cart' pro_list.id %}">Add to
-                                        cart</a></div>
+                                                             href="{% url 'cart:add_cart' pro_list.id %}"> {% trans "Add to cart11" %}
+                                        </a></div>
                                 </div>
                             </div>
                             {% endif %}
@@ -159,7 +159,7 @@
 
 
                     </ul>
-                    <a class="show-more-btn" href="#">Show More</a>
+                    <a class="show-more-btn" href="#">{% trans "Show More" %}</a>
 
                 </div>
 
@@ -172,7 +172,7 @@
         <div class="container">
             <div class="row">
                 <div class="heading-title">
-                    <h2>Limited Products</h2>
+                    <h2> {%  trans "Limited Products"  %} </h2>
                 </div>
 
 
@@ -206,7 +206,7 @@
                                         <div class="price-group">
                                             <ins><span class="price-amount amount">{{limited_pro.PRDPrice}}</span></ins>
                                         </div>
-                                        <div class="cart-btn"><a class="add-to-cart-btn" href="#">Add to cart</a></div>
+                                        <div class="cart-btn"><a class="add-to-cart-btn" href="#">{% trans "Add to cart" %}</a></div>
                                     </div>
                                 </div>
                                 <!-- onsale product end-->
@@ -214,7 +214,7 @@
                         {% endif %}
                         {% endfor %}
                     </ul>
-                    <a class="show-more-btn" href="#">Show More</a>
+                    <a class="show-more-btn" href="#">{% trans "Show More"  %} </a>
                 </div>
 
             </div>
@@ -230,10 +230,24 @@
 <!--    <button id="location-button">Get User Location</button>-->
 <!--    <div id="output"><img src="{% static 'images/logo.png' %}"   ></div>-->
 <!--  </div>-->
-
+<!--{% load i18n %} {#1#}-->
+<!--<form action="{% url 'set_language' %}" method="post">  {#2#}-->
+<!--    {% csrf_token %}  {#3#}-->
+<!--    <select name="language">  {#4#}-->
+<!--        {% get_current_language as LANGUAGE_CODE %}  {#5#}-->
+<!--        {% get_available_languages as LANGUAGES %}  {#6#}-->
+<!--        {% get_language_info_list for LANGUAGES as languages %}  {#7#}-->
+<!--        {% for language in languages %}-->
+<!--            <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>  {#8#}-->
+<!--                {{ language.name_local }} ({{ language.code }})-->
+<!--            </option>-->
+<!--        {% endfor %}-->
+<!--    </select>-->
+<!--    <input type="submit" value="Switch">  {#9#}-->
+<!--</form>-->
+<!--{% translate "I am localized inside the template." %}-->
 </body>
 <script>
-
 </script>
 {% endblock %}
 <!-- body bottom javascript start  -->

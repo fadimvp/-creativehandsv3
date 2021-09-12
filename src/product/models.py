@@ -13,6 +13,40 @@ from account.models import Account
 
 User = settings.AUTH_USER_MODEL
 
+class Languagee(models.Model):
+    name = models.CharField(max_length=20)
+    code = models.CharField(max_length=5)
+    status = models.BooleanField()
+    create_at = models.DateTimeField(auto_now_add=True)
+    update_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+
+llist = Languagee.objects.filter(status=True)
+list1 = []
+for rs in llist:
+    list1.append((rs.code, rs.name))
+langlist = (list1)
+print(langlist,'############')
+
+class Setting(models.Model):
+    STATUS = (
+        ('True', 'True'),
+        ('False', 'False'),
+    )
+    title = models
+
+
+class Settinglang(models.Model):
+    setting = models.ForeignKey('Product', on_delete=models.CASCADE)
+    lang = models.CharField(max_length=6,blank=True,choices=langlist)
+    title = models.CharField(max_length=150)
+    Keywords = models.CharField(max_length=255)
+    descripition = models.CharField(max_length=255)
+    def __str__(self):
+        return self.title
 
 #
 # class ProductQuerySet(models.query.QuerySet):
@@ -26,6 +60,7 @@ User = settings.AUTH_USER_MODEL
 class Product(models.Model):
     # objects =ProductManger()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    lang = models.CharField(max_length=255 , blank=True,choices=langlist)
     PRDName = models.CharField(max_length=75)
     PRDVandor_Name = models.CharField(max_length=75)
     PRDCategory = models.ForeignKey('Category', on_delete=models.CASCADE, blank=True, null=True)
@@ -64,14 +99,15 @@ class Product(models.Model):
     height = models.DecimalField(decimal_places=2, default=0, max_digits=100)
     width = models.DecimalField(decimal_places=2, default=0, max_digits=100)
 
+
     def save(self, *args, **kwargs):
         def save(self, *args, **kwargs):
 
             if not self.PRDSlug:
-                self.PRDSlug = slugify(self.PRDVandor_Name)
+                self.PRDSlug = slugify(self.PRDName)
 
                 if not self.PRDSlug:
-                    self.PRDSlug = self.arabic_slugify(self.PRDVandor_Name)
+                    self.PRDSlug = self.arabic_slugify(self.PRDName)
 
             super(Product, self).save(*args, **kwargs)
 
@@ -81,7 +117,7 @@ class Product(models.Model):
     def save(self, *args, **kwargs):
 
         if not self.PRDSlug:
-            self.PRDSlug = slugify(self.PRDVandor_Name)
+            self.PRDSlug = slugify(self.PRDName)
         super(Product, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
@@ -166,6 +202,11 @@ class Category(models.Model):
 
     def __str__(self):
         return self.CATName
+
+
+class Products_Language(models.Model):
+    En = models.CharField(max_length=255)
+    Ar = models.CharField(max_length=255)
 
 
 class Alternative(models.Model):

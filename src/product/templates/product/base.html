@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 {% load static %}
+{% load i18n %}
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -86,7 +88,7 @@
                     <!-- Menu Items -->
                     <ul class="navbar-nav mr-5">
                         <li class="nav-item active">
-                            <a class="nav-link text-light " href="/">Home <span class="sr-only">(current)</span></a>
+                            <a class="nav-link text-light " href="/">{% trans "Home" %}  <span class="sr-only">(current)</span></a>
                         </li>
 
                         <li class="nav-item dropdown">
@@ -123,10 +125,13 @@
 
                         <li class="nav-item ">
                             {% if user.id is not None%}
-                            <a class="nav-link " href="/">profile <span class="sr-only">(current)</span></a>
+                            <a class="nav-link " href="/">{% trans "profile"  %}   <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link  " href="/">DashBoard <span class="sr-only">(current)</span></a>
+                            <a class="nav-link  " href="/">{% trans "DashBoard" %}  <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item ">
+
                         </li>
                         {% endif %}
                     </ul>
@@ -151,6 +156,23 @@
             <!-- Ajax Filtering on typing letters -->
             <input name="query" id="'query" type="search" class="search_text form-control" placeholder="Search"/>
         </form>
+           {% load i18n %} {#1#}
+<form action="{% url 'set_language' %}" method="post">  {#2#}
+    {% csrf_token %}  {#3#}
+    <select name="language">  {#4#}
+        {% get_current_language as LANGUAGE_CODE %}  {#5#}
+        {% get_available_languages as LANGUAGES %}  {#6#}
+        {% get_language_info_list for LANGUAGES as languages %}  {#7#}
+        {% for language in languages %}
+            <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>  {#8#}
+                {{ language.name_local }} ({{ language.code }})
+            </option>
+        {% endfor %}
+    </select>
+    <input type="submit" value="Switch">  {#9#}
+</form>
+{% translate "I am localized inside the template." %}
+
         {{product_list}}
 
 
@@ -223,6 +245,7 @@
 {% endblock %}
 
 <!-- Footer Section start  -->
+
 <footer>
     <section class="footer-section">
         <div class="container">

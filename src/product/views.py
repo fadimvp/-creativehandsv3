@@ -1,7 +1,8 @@
-from django.shortcuts import render, get_object_or_404, HttpResponseRedirect
+from django.contrib import messages
+from django.shortcuts import render, get_object_or_404, HttpResponseRedirect, redirect
 from django.http import HttpResponse
 # Create your views here.
-from .models import Product, Category, Variation
+from .models import Product, Category, Variation, ReviewRating, Products_Language, Languagee, llist
 from django.core.paginator import Paginator
 from .models import Category
 from .forms import SearchForm
@@ -9,39 +10,51 @@ from cart.models import CartItems
 from cart.views import _cart_id
 from .filters import Product_list_filter
 from django.utils.translation import gettext as aa
-
+from .forms import ReviewForm,MyForm
 from django.db.models import Q
 
 
 # Display  all products  and counts on Home page and category all
 def Product_list(request):
+    form1 = MyForm()
+    language = Products_Language.objects.all()
+    product_list = Product.objects.filter(approved=True).order_by(
+        'id')  # Display  all products if you check in approved
 
+    product_featured = Product.objects.filter(
+        Q(featured=True) & Q(approved=True))  # Display  all products if you check in product_featured
+    limited_products = Product.objects.filter(limited_products=True)
+    limited_products = Product.objects.filter(limited_products=True)
+    list = Languagee.objects.filter(status=True)
+    list1 = []
+    # for rs in llist:
+    #     list1.append((rs.code, rs.name))
+    # langlist = (list1)
+    # if langlist.index['en','en']:
+    #     print(langlist)
+    # list2 = Product.objects.filter(lang=list1)
+    # print(list2)
 
+    # print(langlist, '############2')
+    langar = Product.objects.filter(lang=Product.lang == 1)
+    product_count = product_list.count()  # count all products
+    d = Category.objects.all()  # display all category on home page
+    # paginator
+    paginator = Paginator(product_list, 6)  # product_list == how many products  display on one page
+    page_number = request.GET.get('page')  # get number data
+    product_list = paginator.get_page(page_number)
 
-            product_list = Product.objects.filter(approved=True).order_by(
-            'id')  # Display  all products if you check in approved
+    context = {
+        'product_list': product_list,
+        'product_count': product_count,
+        'product_featured': product_featured,
+        'limited_products': limited_products,
+        'Produts_language': language,
+        'langar': langar,
 
-            product_featured = Product.objects.filter(
-            Q(featured=True) & Q(approved=True))  # Display  all products if you check in product_featured
-            limited_products = Product.objects.filter(limited_products=True)
-
-
-            product_count = product_list.count()  # count all products
-            d = Category.objects.all()  # display all category on home page
-            # paginator
-            paginator = Paginator(product_list, 6)  # product_list == how many products  display on one page
-            page_number = request.GET.get('page')  # get number data
-            product_list = paginator.get_page(page_number)
-
-
-            context = {
-                            'product_list': product_list,
-                            'product_count': product_count,
-                            'product_featured': product_featured,
-                            'limited_products': limited_products,
-                            'd': d,
-                        }
-            return render(request, 'product/product_list.html', context)
+        'd': d,
+    }
+    return render(request, 'product/product_list.html', context)
 
 
 # if you selected show more display all products on home page
@@ -68,7 +81,6 @@ get_url  '''
 def category(request, category_slug):
     d = get_object_or_404(Category, slug=category_slug)
 
-
     context = {
         'd': d
     }
@@ -89,7 +101,9 @@ def Product_detail(request, slug):
 
     }
     return render(request, 'product/singlpage.html', context)
-def tt(request,slug):
+
+
+def tt(request, slug):
     pro_detail = get_object_or_404(Product, PRDSlug=slug)
     d = Category.objects.all()
     in_cart = CartItems.objects.filter(cart__cart_id=_cart_id(request), product=pro_detail).exists()
@@ -101,6 +115,7 @@ def tt(request,slug):
 
     }
     return render(request, 'product/tt.html', context)
+
 
 # store :  any  products under category  and  slug
 def store(request, category_slug=None):
@@ -153,3 +168,32 @@ def search(request):
             return render(request, 'product/product_list.html', context)
     return HttpResponseRedirect(
         '/')  # if you do search  other page same page details or anther page back to display all products in home page
+
+
+def submit_review(request, product_id):
+    print("any=======================")
+    url = request.META.get('HTTP_REFERER')
+    print(url)
+    if request.method == 'POST':
+
+        try:
+            reviews = ReviewRating.objects.get(user__id=request.user.id, product__id=product_id)
+            form = ReviewForm(request.POST, instance=reviews)
+            form.save()
+            messages.success(request, ' dsdsdsdsd')
+            return redirect(url)
+
+        except ReviewRating.DoesNotExist:
+            form = ReviewForm(request.POST)
+            if form.is_valid():
+                data = ReviewRating()
+                data.subject = form.cleaned_data['subject']
+                data.review = form.cleaned_data['review']
+                data.r = form.cleaned_data['rating']
+                data.user_id = request.user.id
+                data.product_id = product_id
+                data.ip = request.META.get('REMOTE_ADDR')
+                data.save()
+                messages.success(request, 'SUECCESS')
+                return redirect(url)
+

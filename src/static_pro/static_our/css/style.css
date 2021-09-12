@@ -10,19 +10,19 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: WS, Wahed Nur, Boilerplate, HTML5, CSS,
 
 */
-.rating > input{
+.rate > input{
 display:none;
 }
-.rating{
+.rate{
 display:inline-block;
 border:0;
   border-color: red;
 
 }
-.rating > label {
+.rate > label {
 float:right;
 }
-.rating > label:before{
+.rate > label:before{
  display:block;
  font-size:2.1rem;
 
@@ -35,7 +35,7 @@ float:right;
       border-color: red;
 }
 /* half start */
-.rating .half:before {
+.rate .half:before {
     content:'\f089';
     position:absolute;
     padding-right:0;

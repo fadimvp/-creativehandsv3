@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, Product_Img, Category,Variation, Alternative, Product_Accessories,ReviewRating
+from .models import Product, Product_Img, Category,Variation, Alternative, Product_Accessories,ReviewRating, Products_Language,Setting,Settinglang,Languagee
 
 
 
@@ -8,6 +8,10 @@ from .models import Product, Product_Img, Category,Variation, Alternative, Produ
 class CategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('CATName',)}
     list_display = ('CATName', 'slug')
+class  langAdmin(admin.ModelAdmin):
+    list_display = ['name','code','status']
+    list_filter = ['status']
+
 
 
 class ProductAdmin(admin.ModelAdmin):
@@ -28,4 +32,9 @@ admin.site.register(Product_Img)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Alternative)
 admin.site.register(ReviewRating)
+admin.site.register(Products_Language)
+
+admin.site.register(Setting)
+admin.site.register(Languagee,langAdmin)
+admin.site.register(Settinglang)
 # admin.site.register(Product_Accessories)
